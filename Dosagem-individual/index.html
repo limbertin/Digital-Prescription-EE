@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receituário Digital - Crystal Interface</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-energy"></div>
+
+    <main class="app-container">
+        <section class="prescription-card" id="main-card">
+            <header class="card-header">
+                <div class="logo-container">
+                    <div class="logo-glow"></div>
+                    <img src="https://via.placeholder.com/40/6366f1/ffffff?text=LE" alt="Logo Life Energy" class="logo">
+                </div>
+                <h1 class="product-name">LIFE ENERGY <span class="size">30ML</span></h1>
+            </header>
+
+            <div class="card-content">
+                <!-- Group 1: Frascos spray -->
+                <div class="input-group" id="group-spray">
+                    <label class="group-label">Frascos spray</label>
+                    <div class="chip-container" data-field="spray">
+                        <button class="chip" data-value="1">1</button>
+                        <button class="chip common" data-value="2">2 <small>mais comum</small></button>
+                        <button class="chip" data-value="3">3</button>
+                        <button class="chip" data-value="4">4</button>
+                        <button class="chip custom-trigger" title="Outro valor">
+                            <span>+</span>
+                        </button>
+                        <div class="custom-input-wrapper hidden">
+                            <button class="btn-step minus" aria-label="Decrease">&minus;</button>
+                            <span class="step-value">5</span>
+                            <button class="btn-step plus" aria-label="Increase">&plus;</button>
+                            <button class="btn-confirm-custom">OK</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Borrifar vezes -->
+                <div class="input-group" id="group-dosage">
+                    <label class="group-label">Borrifar ___ vezes</label>
+                    <div class="chip-container" data-field="dosage">
+                        <button class="chip common" data-value="3">3 <small>mais comum</small></button>
+                        <button class="chip common" data-value="4">4 <small>mais comum</small></button>
+                        <button class="chip" data-value="5">5</button>
+                        <button class="chip" data-value="6">6</button>
+                        <button class="chip custom-trigger" title="Outro valor">
+                            <span>+</span>
+                        </button>
+                        <div class="custom-input-wrapper hidden">
+                            <button class="btn-step minus" aria-label="Decrease">&minus;</button>
+                            <span class="step-value">8</span>
+                            <button class="btn-step plus" aria-label="Increase">&plus;</button>
+                            <button class="btn-confirm-custom">OK</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fixed-instruction">
+                    <p>4 vezes ao dia, por 7 dias.</p>
+                </div>
+            </div>
+
+            <footer class="card-footer">
+                <div class="status-indicator" id="status-icon"></div>
+                <span id="status-text">Aguardando preenchimento...</span>
+            </footer>
+        </section>
+
+        <section class="actions">
+            <button class="btn-primary disabled" id="btn-submit" disabled>Gerar Prescrição</button>
+            <div class="secondary-actions">
+                <button class="btn-secondary" id="btn-copy">Copiar Última</button>
+                <button class="btn-secondary danger" id="btn-reset">Limpar</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

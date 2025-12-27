@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receituário Digital - Essential Energy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-energy"></div>
+
+    <main class="app-layout">
+        <!-- Main Content: Catálogo de Produtos -->
+        <section class="catalog-section">
+            <header class="catalog-header">
+                <h1>Catálogo de Essências</h1>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Buscar essência..." autocomplete="off">
+                </div>
+            </header>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Produtos inseridos via JS -->
+            </div>
+        </section>
+
+        <!-- Sidebar: Prescrição em Construção -->
+        <aside class="sidebar-section">
+            <div class="glass-sidebar">
+                <header class="sidebar-header">
+                    <h2>Seu Receituário</h2>
+                    <div class="product-badge" id="selected-count">0</div>
+                </header>
+
+                <div class="selected-products-list" id="sidebar-list">
+                    <p class="empty-state">Nenhuma essência selecionada</p>
+                </div>
+
+                <div class="sidebar-footer">
+                    <button class="btn-primary disabled" id="btn-submit" disabled>Gerar Receituário</button>
+                    <div class="secondary-actions">
+                        <button class="btn-secondary" id="btn-copy">Copiar Última</button>
+                        <button class="btn-secondary danger" id="btn-reset">Limpar Tudo</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Modal de Sucesso -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="prescription-preview-card">
+            <button class="btn-close-modal" id="close-modal">&times;</button>
+            <h2>Receituário Gerado</h2>
+            <div id="preview-content"></div>
+            <div class="preview-actions">
+                <button class="btn-primary">Baixar PDF</button>
+                <button class="btn-secondary">Enviar WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
