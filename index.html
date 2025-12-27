@@ -19,6 +19,7 @@
                 <h1>Catálogo de Essências</h1>
                 <div class="search-container">
                     <input type="text" id="search-input" placeholder="Buscar essência..." autocomplete="off">
+                    <button id="clear-search" class="btn-clear-search" title="Limpar busca">&times;</button>
                 </div>
             </header>
 
@@ -31,7 +32,7 @@
         <aside class="sidebar-section">
             <div class="glass-sidebar">
                 <header class="sidebar-header">
-                    <h2>Seu Receituário</h2>
+                    <h2>Seus Selecionados</h2>
                     <div class="product-badge" id="selected-count">0</div>
                 </header>
 
@@ -50,15 +51,73 @@
         </aside>
     </main>
 
+    <!-- Modal de Dosagem (Individual Interface) -->
+    <div class="modal-overlay" id="dosage-modal">
+        <div class="modal-content">
+            <section class="prescription-card" id="dosage-card">
+                <header class="card-header-dosage">
+                    <div class="logo-container">
+                        <div class="logo-glow"></div>
+                        <img src="" alt="" class="modal-product-logo" id="modal-logo">
+                    </div>
+                    <h2 class="product-name-dosage"><span id="modal-product-name"></span> <span class="size">30ML</span>
+                    </h2>
+                </header>
+
+                <div class="card-content-dosage">
+                    <div class="input-group" id="group-spray">
+                        <label class="group-label">Frascos spray</label>
+                        <div class="chip-container" data-field="spray">
+                            <button class="chip common active" data-value="1">1 <small>mais comum</small></button>
+                            <button class="chip" data-value="2">2</button>
+                            <button class="chip" data-value="3">3</button>
+                            <button class="chip" data-value="4">4</button>
+                            <button class="chip custom-trigger">+</button>
+                            <div class="custom-input-wrapper hidden">
+                                <button class="btn-step minus">&minus;</button>
+                                <span class="step-value">5</span>
+                                <button class="btn-step plus">&plus;</button>
+                                <button class="btn-confirm-custom">OK</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="group-dosage">
+                        <label class="group-label">Borrifar ___ vezes</label>
+                        <div class="chip-container" data-field="dosage">
+                            <button class="chip common" data-value="3">3 <small>mais comum</small></button>
+                            <button class="chip common active" data-value="4">4 <small>mais comum</small></button>
+                            <button class="chip" data-value="5">5</button>
+                            <button class="chip" data-value="6">6</button>
+                            <button class="chip custom-trigger">+</button>
+                            <div class="custom-input-wrapper hidden">
+                                <button class="btn-step minus">&minus;</button>
+                                <span class="step-value">8</span>
+                                <button class="btn-step plus">&plus;</button>
+                                <button class="btn-confirm-custom">OK</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fixed-instruction">
+                        <p>4 vezes ao dia, por 7 dias.</p>
+                    </div>
+                </div>
+
+                <footer class="modal-footer">
+                    <button class="btn-secondary" id="btn-cancel-dosage">Cancelar</button>
+                    <button class="btn-primary" id="btn-confirm-dosage">Confirmar Seleção</button>
+                </footer>
+            </section>
+        </div>
+    </div>
+
     <!-- Modal de Sucesso -->
-    <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-overlay" id="success-modal">
         <div class="prescription-preview-card">
-            <button class="btn-close-modal" id="close-modal">&times;</button>
             <h2>Receituário Gerado</h2>
-            <div id="preview-content"></div>
             <div class="preview-actions">
-                <button class="btn-primary">Baixar PDF</button>
-                <button class="btn-secondary">Enviar WhatsApp</button>
+                <button class="btn-primary" id="close-success">Fechar</button>
             </div>
         </div>
     </div>

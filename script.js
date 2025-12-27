@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "Natural Care 4": "Natural-Care-Four.png",
         "Life Energy": "Life-Energy.Png",
         "Refresh Energy": "Refresh-Energy.png"
-        // Most others follow "Name-Energy.Png"
     };
 
+    // DOM Elements
     const productsGrid = document.getElementById('products-grid');
     const sidebarList = document.getElementById('sidebar-list');
     const selectedCount = document.getElementById('selected-count');
@@ -26,11 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReset = document.getElementById('btn-reset');
     const searchInput = document.getElementById('search-input');
 
-    let selectedProducts = new Map();
+    // Modal Elements
+    const dosageModal = document.getElementById('dosage-modal');
+    const modalProductName = document.getElementById('modal-product-name');
+    const modalLogo = document.getElementById('modal-logo');
+    const btnConfirmDosage = document.getElementById('btn-confirm-dosage');
+    const btnCancelDosage = document.getElementById('btn-cancel-dosage');
+
+    let selectedProducts = new Map(); // name -> { spray, dosage }
+    let currentProductEditing = null;
+
+    // --- Core Logic ---
 
     function getLogo(name) {
         if (logoMap[name]) return logoMap[name];
-        return name.replace(" ", "-") + ".Png";
+        return name.replace(/ /g, "-") + ".Png";
     }
 
     function renderProducts(filter = '') {
@@ -39,9 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filtered.forEach(name => {
             const isActive = selectedProducts.has(name);
+            const cardData = selectedProducts.get(name);
             const card = document.createElement('div');
             card.className = `product-card ${isActive ? 'active' : 'dormant'}`;
-            
+
             card.innerHTML = `
                 <div class="product-logo-container">
                     <div class="logo-glow"></div>
@@ -49,32 +60,129 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${name}</h3>
-                    <p class="product-type">${isActive ? 'Dosagem: ' + selectedProducts.get(name) : 'Frequencial Floral'}</p>
+                    <p class="product-type">${isActive ? `${cardData.spray} frascos / ${cardData.dosage} doses` : 'Frequencial Floral'}</p>
                 </div>
             `;
-            
-            card.addEventListener('click', () => {
-                if (isActive) {
-                    removeProduct(name);
-                } else {
-                    const dosage = prompt(`Defina a dosagem para ${name} (1 a 4+):`, "1");
-                    if (dosage) addProduct(name, dosage);
-                }
-            });
-            
+
+            card.addEventListener('click', () => openDosageModal(name));
             productsGrid.appendChild(card);
         });
     }
 
-    function addProduct(name, dosage) {
-        selectedProducts.set(name, dosage);
-        updateUI();
+    // Modulo de Busca
+    const clearSearch = document.getElementById('clear-search');
+
+    searchInput.addEventListener('input', (e) => {
+        renderProducts(e.target.value);
+        clearSearch.style.display = e.target.value ? 'block' : 'none';
+    });
+
+    clearSearch.onclick = () => {
+        searchInput.value = '';
+        renderProducts('');
+        clearSearch.style.display = 'none';
+        searchInput.focus();
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (dosageModal.classList.contains('active')) {
+                dosageModal.classList.remove('active');
+            } else if (searchInput.value) {
+                searchInput.value = '';
+                renderProducts('');
+                clearSearch.style.display = 'none';
+            }
+        }
+    });
+
+    // --- Modal Logic ---
+
+    function openDosageModal(name) {
+        currentProductEditing = name;
+        modalProductName.textContent = name;
+        modalLogo.src = `Logos-produtos-EE/${getLogo(name)}`;
+
+        // Reset modal to default or existing values
+        const existing = selectedProducts.get(name);
+        setupChipSelection('spray', existing ? existing.spray : "1");
+        setupChipSelection('dosage', existing ? existing.dosage : "4");
+
+        dosageModal.classList.add('active');
     }
 
-    function removeProduct(name) {
-        selectedProducts.delete(name);
-        updateUI();
+    function setupChipSelection(field, initialValue) {
+        const container = document.querySelector(`.chip-container[data-field="${field}"]`);
+        const chips = container.querySelectorAll('.chip:not(.custom-trigger)');
+        const customTrigger = container.querySelector('.custom-trigger');
+        const customWrapper = container.querySelector('.custom-input-wrapper');
+        const stepValueDisplay = container.querySelector('.step-value');
+
+        // Reset state
+        customTrigger.classList.remove('hidden');
+        customWrapper.classList.add('hidden');
+        chips.forEach(c => c.classList.remove('active'));
+
+        let matched = false;
+        chips.forEach(chip => {
+            if (chip.dataset.value === String(initialValue)) {
+                chip.classList.add('active');
+                matched = true;
+            }
+            // Simple click listener (re-attached)
+            chip.onclick = () => {
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                customTrigger.classList.remove('hidden');
+                customWrapper.classList.add('hidden');
+            };
+        });
+
+        if (!matched && initialValue) {
+            customTrigger.classList.add('hidden');
+            customWrapper.classList.remove('hidden');
+            stepValueDisplay.textContent = initialValue;
+        }
+
+        customTrigger.onclick = () => {
+            customTrigger.classList.add('hidden');
+            customWrapper.classList.remove('hidden');
+            chips.forEach(c => c.classList.remove('active'));
+        };
+
+        container.querySelector('.plus').onclick = () => {
+            stepValueDisplay.textContent = parseInt(stepValueDisplay.textContent) + 1;
+        };
+        container.querySelector('.minus').onclick = () => {
+            const val = parseInt(stepValueDisplay.textContent);
+            if (val > 1) stepValueDisplay.textContent = val - 1;
+        };
+        container.querySelector('.btn-confirm-custom').onclick = () => {
+            // Visual feedback only, value is read on Confirm Selection
+        };
     }
+
+    btnConfirmDosage.onclick = () => {
+        const spray = getSelectedValue('spray');
+        const dosage = getSelectedValue('dosage');
+
+        selectedProducts.set(currentProductEditing, { spray, dosage });
+        dosageModal.classList.remove('active');
+        updateUI();
+    };
+
+    function getSelectedValue(field) {
+        const container = document.querySelector(`.chip-container[data-field="${field}"]`);
+        const activeChip = container.querySelector('.chip.active');
+        if (activeChip) return activeChip.dataset.value;
+        return container.querySelector('.step-value').textContent;
+    }
+
+    btnCancelDosage.onclick = () => {
+        dosageModal.classList.remove('active');
+    };
+
+    // --- Sidebar & General UI ---
 
     function updateUI() {
         sidebarList.innerHTML = '';
@@ -83,29 +191,17 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSubmit.disabled = true;
             btnSubmit.classList.add('disabled');
         } else {
-            selectedProducts.forEach((dosage, name) => {
+            selectedProducts.forEach((data, name) => {
                 const item = document.createElement('div');
                 item.className = 'selected-item';
-                item.style.padding = '12px';
-                item.style.background = 'rgba(255,255,255,0.05)';
-                item.style.border = '1px solid rgba(255,255,255,0.1)';
-                item.style.borderRadius = '12px';
-                item.style.marginBottom = '12px';
-                item.style.display = 'flex';
-                item.style.justifyContent = 'space-between';
-                item.style.alignItems = 'center';
-                item.style.animation = 'slideIn 0.3s ease-out';
+                item.style = "padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;";
                 item.innerHTML = `
-                    <div>
+                    <div style="cursor:pointer;" onclick="window.openDosageFromSidebar('${name}')">
                         <strong style="display:block; font-size:0.9rem; color:#f8fafc;">${name}</strong>
-                        <span style="font-size:0.8rem; color:#94a3b8;">${dosage} doses/dia</span>
+                        <span style="font-size:0.8rem; color:#94a3b8;">${data.spray} frascos | ${data.dosage} doses</span>
                     </div>
-                    <button class="remove-btn" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:1.5rem; line-height:1;">&times;</button>
+                    <button class="remove-btn" onclick="window.removeProductFromSidebar('${name}')" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:1.5rem; line-height:1;">&times;</button>
                 `;
-                item.querySelector('.remove-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    removeProduct(name);
-                });
                 sidebarList.appendChild(item);
             });
             btnSubmit.disabled = false;
@@ -115,6 +211,16 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedCount.textContent = selectedProducts.size;
         renderProducts(searchInput.value);
     }
+
+    // Exposed for inline onclicks
+    window.removeProductFromSidebar = (name) => {
+        selectedProducts.delete(name);
+        updateUI();
+    };
+
+    window.openDosageFromSidebar = (name) => {
+        openDosageModal(name);
+    };
 
     searchInput.addEventListener('input', (e) => {
         renderProducts(e.target.value);
