@@ -65,6 +65,7 @@ body {
     margin-bottom: 15px;
     background: linear-gradient(90deg, #fff, var(--neon-blue));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -240,6 +241,24 @@ body {
     border-radius: 24px;
     padding: 24px;
     box-shadow: var(--glass-shadow);
+    max-height: 85vh;
+    overflow-y: auto;
+    /* Hide scrollbar for cleaner look but keep functionality */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) transparent;
+}
+
+.prescription-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.prescription-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.prescription-card::-webkit-scrollbar-thumb {
+    background-color: var(--accent-primary);
+    border-radius: 20px;
 }
 
 .card-header-dosage {
@@ -281,7 +300,35 @@ body {
 .product-name-dosage .size {
     font-weight: 300;
     color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* Natural Care Four Specific Styles */
+.card-content-dosage h2 {
+    font-size: 1rem;
+    color: var(--neon-blue);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.card-content-dosage h3 {
     font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    margin-top: 20px;
+}
+
+.care-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .input-group {
@@ -342,7 +389,9 @@ body {
     border-radius: 12px;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 .btn-step {
     background: rgba(255, 255, 255, 0.1);
@@ -438,7 +487,7 @@ body {
     .app-layout {
         grid-template-columns: 1fr;
     }
-    
+
     .sidebar-section {
         position: fixed;
         bottom: 0;

@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
         "Protection Energy", "Fast Energy", "Booster Energy", "Shield Energy", "Vital Energy",
         "Innova Energy", "Bio Energy", "Pure Energy", "Herbs Energy", "Guardian Energy",
         "Optimum Energy", "Human Energy", "Pleasant Energy", "Defense Energy", "Extreme Energy",
-        "Natural Care 4", "Refresh Energy"
+        "Natural Care Four", "Refresh Energy"
     ];
 
     const logoMap = {
         "Microclear Energy": "Micro-Clear-Energy.Png",
-        "Natural Care 4": "Natural-Care-Four.png",
+        "Natural Care Four": "Natural-Care-Four.png",
         "Life Energy": "Life-Energy.Png",
         "Refresh Energy": "Refresh-Energy.png"
     };
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${name}</h3>
-                    <p class="product-type">${isActive ? `${cardData.spray} frascos / ${cardData.dosage} doses` : 'Frequencial Floral'}</p>
+                    <p class="product-type">${isActive ? (cardData.isComplex ? `${cardData.spray} kit / ${cardData.days} dias` : `${cardData.spray} frascos / ${cardData.dosage} borrifadas`) : ''}</p>
                 </div>
             `;
 
@@ -103,12 +103,126 @@ document.addEventListener('DOMContentLoaded', () => {
         modalProductName.textContent = name;
         modalLogo.src = `Logos-produtos-EE/${getLogo(name)}`;
 
-        // Reset modal to default or existing values
+        const cardContent = document.querySelector('.card-content-dosage');
+        const modalSize = document.querySelector('.product-name-dosage .size');
+
+        if (name === "Natural Care Four") {
+            modalSize.textContent = "'10ml cada'";
+            renderNaturalCareFour(cardContent);
+        } else {
+            modalSize.textContent = "30ML";
+            renderStandardDosage(cardContent);
+        }
+
         const existing = selectedProducts.get(name);
-        setupChipSelection('spray', existing ? existing.spray : "1");
-        setupChipSelection('dosage', existing ? existing.dosage : "4");
+
+        if (name === "Natural Care Four") {
+            const data = existing || { spray: "1", days: "7", care1: "3", care2: "3", care3: "3", care4: "3" };
+            setupChipSelection('spray', data.spray);
+            setupChipSelection('days', data.days);
+            setupChipSelection('care1', data.care1);
+            setupChipSelection('care2', data.care2);
+            setupChipSelection('care3', data.care3);
+            setupChipSelection('care4', data.care4);
+        } else {
+            const data = existing || { spray: "1", dosage: "4" };
+            setupChipSelection('spray', data.spray);
+            setupChipSelection('dosage', data.dosage);
+        }
 
         dosageModal.classList.add('active');
+    }
+
+    function renderStandardDosage(container) {
+        container.innerHTML = `
+            <div class="input-group" id="group-spray">
+                <label class="group-label">Frascos spray</label>
+                <div class="chip-container" data-field="spray">
+                    <button class="chip common" data-value="1">1 <small>mais comum</small></button>
+                    <button class="chip" data-value="2">2</button>
+                    <button class="chip" data-value="3">3</button>
+                    <button class="chip" data-value="4">4</button>
+                    <button class="chip custom-trigger">&plusmn;</button>
+                    <div class="custom-input-wrapper hidden">
+                        <button class="btn-step minus">&minus;</button>
+                        <span class="step-value">5</span>
+                        <button class="btn-step plus">&plus;</button>
+                        <button class="btn-confirm-custom">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group" id="group-dosage">
+                <label class="group-label">Borrifar ___ vezes</label>
+                <div class="chip-container" data-field="dosage">
+                    <button class="chip common" data-value="3">3 <small>mais comum</small></button>
+                    <button class="chip common" data-value="4">4 <small>mais comum</small></button>
+                    <button class="chip" data-value="5">5</button>
+                    <button class="chip" data-value="6">6</button>
+                    <button class="chip custom-trigger">&plusmn;</button>
+                    <div class="custom-input-wrapper hidden">
+                        <button class="btn-step minus">&minus;</button>
+                        <span class="step-value">8</span>
+                        <button class="btn-step plus">&plus;</button>
+                        <button class="btn-confirm-custom">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fixed-instruction">
+                <p>4 vezes ao dia, por 7 dias.</p>
+            </div>
+        `;
+    }
+
+    function renderNaturalCareFour(container) {
+        container.innerHTML = `
+            <div class="input-group">
+                <h3>FRASCOS SPRAY</h3>
+                <div class="chip-container" data-field="spray">
+                    <button class="chip" data-value="1">1</button>
+                    <button class="chip" data-value="2">2</button>
+                    <button class="chip" data-value="3">3</button>
+                    <button class="chip" data-value="4">4</button>
+                    <button class="chip custom-trigger">&plusmn;</button>
+                    <div class="custom-input-wrapper hidden">
+                        <button class="btn-step minus">&minus;</button>
+                        <span class="step-value">5</span>
+                        <button class="btn-step plus">&plus;</button>
+                        <button class="btn-confirm-custom">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <h3>DIAS</h3>
+                <div class="chip-container" data-field="days">
+                    <button class="chip" data-value="5">5</button>
+                    <button class="chip" data-value="7">7</button>
+                </div>
+            </div>
+
+            ${[1, 2, 3, 4].map(num => `
+                <div class="care-section">
+                    <h2>Care ${num}</h2>
+                    <h3>BORRIFAR ___ VEZES</h3>
+                    <label class="care-label">Care ${num} : Borrifar ____ x VO,</label>
+                    <div class="chip-container" data-field="care${num}">
+                        <button class="chip" data-value="1">1</button>
+                        <button class="chip" data-value="2">2</button>
+                        <button class="chip" data-value="3">3</button>
+                        <button class="chip" data-value="4">4</button>
+                        <button class="chip custom-trigger">&plusmn;</button>
+                        <div class="custom-input-wrapper hidden">
+                            <button class="btn-step minus">&minus;</button>
+                            <span class="step-value">5</span>
+                            <button class="btn-step plus">&plus;</button>
+                            <button class="btn-confirm-custom">OK</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        `;
     }
 
     function setupChipSelection(field, initialValue) {
@@ -118,9 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const customWrapper = container.querySelector('.custom-input-wrapper');
         const stepValueDisplay = container.querySelector('.step-value');
 
-        // Reset state
-        customTrigger.classList.remove('hidden');
-        customWrapper.classList.add('hidden');
+        // Reset state (only if elements exist)
+        if (customTrigger) customTrigger.classList.remove('hidden');
+        if (customWrapper) customWrapper.classList.add('hidden');
         chips.forEach(c => c.classList.remove('active'));
 
         let matched = false;
@@ -133,40 +247,67 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.onclick = () => {
                 chips.forEach(c => c.classList.remove('active'));
                 chip.classList.add('active');
-                customTrigger.classList.remove('hidden');
-                customWrapper.classList.add('hidden');
+                if (customTrigger) customTrigger.classList.remove('hidden');
+                if (customWrapper) customWrapper.classList.add('hidden');
             };
         });
 
-        if (!matched && initialValue) {
+        if (!matched && initialValue && customTrigger && customWrapper && stepValueDisplay) {
             customTrigger.classList.add('hidden');
             customWrapper.classList.remove('hidden');
             stepValueDisplay.textContent = initialValue;
         }
 
-        customTrigger.onclick = () => {
-            customTrigger.classList.add('hidden');
-            customWrapper.classList.remove('hidden');
-            chips.forEach(c => c.classList.remove('active'));
-        };
+        if (customTrigger && customWrapper) {
+            customTrigger.onclick = () => {
+                customTrigger.classList.add('hidden');
+                customWrapper.classList.remove('hidden');
+                chips.forEach(c => c.classList.remove('active'));
+            };
+        }
 
-        container.querySelector('.plus').onclick = () => {
-            stepValueDisplay.textContent = parseInt(stepValueDisplay.textContent) + 1;
-        };
-        container.querySelector('.minus').onclick = () => {
-            const val = parseInt(stepValueDisplay.textContent);
-            if (val > 1) stepValueDisplay.textContent = val - 1;
-        };
-        container.querySelector('.btn-confirm-custom').onclick = () => {
-            // Visual feedback only, value is read on Confirm Selection
-        };
+        const plusBtn = container.querySelector('.plus');
+        const minusBtn = container.querySelector('.minus');
+        const confirmBtn = container.querySelector('.btn-confirm-custom');
+
+        if (plusBtn && stepValueDisplay) {
+            plusBtn.onclick = () => {
+                stepValueDisplay.textContent = parseInt(stepValueDisplay.textContent) + 1;
+            };
+        }
+        if (minusBtn && stepValueDisplay) {
+            minusBtn.onclick = () => {
+                const val = parseInt(stepValueDisplay.textContent);
+                if (val > 1) stepValueDisplay.textContent = val - 1;
+            };
+        }
+        if (confirmBtn) {
+            confirmBtn.onclick = () => {
+                // Visual feedback only, value is read on Confirm Selection
+            };
+        }
     }
 
     btnConfirmDosage.onclick = () => {
-        const spray = getSelectedValue('spray');
-        const dosage = getSelectedValue('dosage');
+        let data;
+        if (currentProductEditing === "Natural Care Four") {
+            data = {
+                spray: getSelectedValue('spray'),
+                days: getSelectedValue('days'),
+                care1: getSelectedValue('care1'),
+                care2: getSelectedValue('care2'),
+                care3: getSelectedValue('care3'),
+                care4: getSelectedValue('care4'),
+                isComplex: true
+            };
+        } else {
+            data = {
+                spray: getSelectedValue('spray'),
+                dosage: getSelectedValue('dosage')
+            };
+        }
 
-        selectedProducts.set(currentProductEditing, { spray, dosage });
+        selectedProducts.set(currentProductEditing, data);
         dosageModal.classList.remove('active');
         updateUI();
     };
@@ -195,10 +336,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const item = document.createElement('div');
                 item.className = 'selected-item';
                 item.style = "padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;";
+
+                let detailText;
+                if (data.isComplex) {
+                    detailText = `${data.spray} kit | ${data.days} dias`;
+                } else {
+                    detailText = `${data.spray} frascos | ${data.dosage} borrifadas`;
+                }
+
                 item.innerHTML = `
                     <div style="cursor:pointer;" onclick="window.openDosageFromSidebar('${name}')">
                         <strong style="display:block; font-size:0.9rem; color:#f8fafc;">${name}</strong>
-                        <span style="font-size:0.8rem; color:#94a3b8;">${data.spray} frascos | ${data.dosage} doses</span>
+                        <span style="font-size:0.8rem; color:#94a3b8;">${detailText}</span>
                     </div>
                     <button class="remove-btn" onclick="window.removeProductFromSidebar('${name}')" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:1.5rem; line-height:1;">&times;</button>
                 `;
