@@ -184,6 +184,41 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 15px;
+}
+
+.patient-info-trigger {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.patient-info-trigger:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--neon-blue);
+}
+
+.patient-info-trigger .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.patient-info-trigger .value {
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-badge {
@@ -420,6 +455,23 @@ body {
     font-weight: 600;
 }
 
+.custom-text-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.custom-text-input:focus {
+    outline: none;
+    border-color: var(--neon-blue);
+    background: rgba(255, 255, 255, 0.08);
+}
+
 .fixed-instruction {
     margin-top: 32px;
     padding-top: 20px;
@@ -472,14 +524,307 @@ body {
     width: 100%;
 }
 
-/* Success Modal */
-.prescription-preview-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
+/* Final Prescription Modal */
+.prescription-modal-content {
+    max-width: 800px;
+    width: 95%;
+}
+
+.prescription-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--neon-blue);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header-logo {
+    height: 60px;
+    width: auto;
+}
+
+.header-info {
+    text-align: right;
+}
+
+.header-info h2 {
+    color: var(--neon-blue);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.date-display {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.patient-banner {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--neon-blue);
+}
+
+.patient-banner strong {
+    color: var(--neon-blue);
+    font-size: 1.1rem;
+}
+
+.prescribed-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.prescribed-item-card {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 30px;
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    page-break-inside: avoid;
+    position: relative;
+}
+
+.item-header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.item-underline {
+    flex-shrink: 0;
+    width: 20px;
+    border-bottom: 1px solid var(--text-dim);
+    margin-bottom: 4px;
+}
+
+.item-logo-small {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.item-posology {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.btn-buy {
+    background: #22c55e;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.general-instructions {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(0, 242, 255, 0.05);
+    border-radius: 16px;
+}
+
+.general-instructions h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--neon-blue);
+}
+
+.general-instructions ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.general-instructions li {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.general-instructions li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--neon-blue);
+}
+
+.signature-area {
+    margin-top: 60px;
     text-align: center;
+    display: none;
+    /* Only show in print */
+}
+
+.sig-line {
+    border-top: 1px solid #000;
+    width: 250px;
+    margin: 0 auto 10px;
+}
+
+.prescription-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-action {
+    flex: 1;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.btn-action:active {
+    transform: scale(0.98);
+}
+
+.btn-action.whatsapp {
+    background: #25d366;
+    color: white;
+}
+
+.btn-action.print {
+    background: var(--accent-primary);
+    color: white;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .printable-area,
+    .printable-area * {
+        visibility: visible;
+    }
+
+    .printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        border: none !important;
+    }
+
+    .prescription-card {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    .prescription-header {
+        border-bottom: 2px solid #000;
+        margin-bottom: 20px;
+    }
+
+    .header-logo {
+        height: 90px;
+        /* Increased 1.5x from 60px */
+    }
+
+    .prescribed-items {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .prescribed-item-card {
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    .item-header-row {
+        gap: 5px;
+    }
+
+    .item-underline {
+        border-bottom: 1px solid #000;
+    }
+
+    .header-info h2,
+    .patient-banner strong,
+    .general-instructions h3 {
+        color: #000 !important;
+    }
+
+    .patient-banner,
+    .prescribed-item-card,
+    .general-instructions {
+        background: none !important;
+        border: 1px solid #eee !important;
+        color: #333 !important;
+    }
+
+    .patient-banner {
+        border-left: 4px solid #000 !important;
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+
+    .general-instructions {
+        margin-top: 20px;
+        border-top: 1px dashed #ccc !important;
+    }
+
+    .manual-note-line {
+        border-bottom: 1px solid #eee;
+        height: 30px;
+        margin-bottom: 10px;
+    }
+
+    .item-posology,
+    .general-instructions li,
+    .date-display {
+        color: #666 !important;
+    }
+
+    .btn-buy {
+        display: none !important;
+        /* Don't show buy button on print */
+    }
+
+    .signature-area {
+        display: block !important;
+        margin-top: 40px;
+    }
+
+    .signature-area p {
+        margin: 2px 0;
+        font-size: 0.9rem;
+    }
+
+    .prescription-actions,
+    .modal-footer {
+        display: none !important;
+    }
 }
 
 /* Responsive */

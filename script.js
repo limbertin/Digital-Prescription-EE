@@ -18,6 +18,51 @@ document.addEventListener('DOMContentLoaded', () => {
         "Refresh Energy": "Refresh-Energy.png"
     };
 
+    const productLinks = {
+        "Life Energy": "https://www.essentialenergy.com.br/essencias/life-energy-30ml",
+        "Imuno Energy": "https://www.essentialenergy.com.br/essencias/imuno-energy-30ml",
+        "Balance Energy": "https://www.essentialenergy.com.br/essencias/balance-energy-30ml",
+        "Brain Energy": "https://www.essentialenergy.com.br/essencias/brain-energy-30ml",
+        "Circulatory Energy": "https://www.essentialenergy.com.br/essencias/circulatory-energy-30ml",
+        "Harmony Energy": "https://www.essentialenergy.com.br/essencias/harmony-energy-30ml",
+        "Digest Energy": "https://www.essentialenergy.com.br/essencias/digest-energy-30ml",
+        "Pancreatic Energy": "https://www.essentialenergy.com.br/essencias/pancreatic-energy-30ml",
+        "Cardio Energy": "https://www.essentialenergy.com.br/essencias/cardio-energy-30ml",
+        "Microclear Energy": "https://www.essentialenergy.com.br/essencias/micro-clear-energy-30ml",
+        "Wellness Energy": "https://www.essentialenergy.com.br/essencias/wellness-energy-30ml",
+        "Chakras Energy": "https://www.essentialenergy.com.br/essencias/chakras-energy-30ml",
+        "Dental Energy": "https://www.essentialenergy.com.br/essencias/dental-energy-30ml",
+        "Renew Energy": "https://www.essentialenergy.com.br/essencias/renew-energy-30ml",
+        "Intestinal Energy": "https://www.essentialenergy.com.br/essencias/intestinal-energy-30ml",
+        "Quantum Energy": "https://www.essentialenergy.com.br/essencias/quantum-energy-30ml",
+        "Respiratory Energy": "https://www.essentialenergy.com.br/essencias/respiratory-energy-30ml",
+        "Night Energy": "https://www.essentialenergy.com.br/essencias/night-energy-30ml",
+        "Natural Energy": "https://www.essentialenergy.com.br/essencias/natural-energy-30ml",
+        "Body Energy": "https://www.essentialenergy.com.br/essencias/body-energy-30ml",
+        "Urinary Energy": "https://www.essentialenergy.com.br/essencias/urinary-energy-30ml",
+        "Restore Energy": "https://www.essentialenergy.com.br/essencias/restore-energy-30ml",
+        "Female Energy": "https://www.essentialenergy.com.br/essencias/female-energy-30ml",
+        "Male Energy": "https://www.essentialenergy.com.br/essencias/male-energy-30ml",
+        "Organs Energy": "https://www.essentialenergy.com.br/essencias/organs-energy-30ml",
+        "Protection Energy": "https://www.essentialenergy.com.br/essencias/protection-energy-30ml",
+        "Fast Energy": "https://www.essentialenergy.com.br/essencias/fast-energy-30ml",
+        "Booster Energy": "https://www.essentialenergy.com.br/essencias/booster-energy-30ml",
+        "Shield Energy": "https://www.essentialenergy.com.br/essencias/shield-energy-30ml",
+        "Vital Energy": "https://www.essentialenergy.com.br/essencias/vital-energy-30ml",
+        "Innova Energy": "https://www.essentialenergy.com.br/essencias/innova-energy-30ml",
+        "Bio Energy": "https://www.essentialenergy.com.br/essencias/bio-energy-30ml",
+        "Pure Energy": "https://www.essentialenergy.com.br/essencias/pure-energy-30ml",
+        "Herbs Energy": "https://www.essentialenergy.com.br/essencias/herbs-energy-30ml",
+        "Guardian Energy": "https://www.essentialenergy.com.br/essencias/guardian-energy-30ml",
+        "Optimum Energy": "https://www.essentialenergy.com.br/essencias/optimun-energy-30ml",
+        "Human Energy": "https://www.essentialenergy.com.br/essencias/human-energy-30ml",
+        "Pleasant Energy": "https://www.essentialenergy.com.br/essencias/pleasant-energy-15ml",
+        "Defense Energy": "https://www.essentialenergy.com.br/essencias/defense-energy-30ml",
+        "Extreme Energy": "https://www.essentialenergy.com.br/essencias/extreme-energy-30ml",
+        "Natural Care Four": "https://www.essentialenergy.com.br/essencias-naturais/natural-care-four-10ml",
+        "Refresh Energy": "https://www.essentialenergy.com.br/essencias/refresh-energy-30ml"
+    };
+
     // DOM Elements
     const productsGrid = document.getElementById('products-grid');
     const sidebarList = document.getElementById('sidebar-list');
@@ -35,6 +80,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedProducts = new Map(); // name -> { spray, dosage }
     let currentProductEditing = null;
+    let patientData = {
+        name: '',
+        phone: '',
+        date: new Date().toISOString().split('T')[0]
+    };
+
+    // Patient Modal Elements
+    const patientModal = document.getElementById('patient-modal');
+    const patientTrigger = document.getElementById('patient-trigger');
+    const patientNameDisplay = document.getElementById('patient-name-display');
+    const inputPatientName = document.getElementById('input-patient-name');
+    const inputPatientPhone = document.getElementById('input-patient-phone');
+    const inputPrescriptionDate = document.getElementById('input-prescription-date');
+    const btnSavePatient = document.getElementById('btn-save-patient');
+    const btnCancelPatient = document.getElementById('btn-cancel-patient');
 
     // --- Core Logic ---
 
@@ -88,6 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             if (dosageModal.classList.contains('active')) {
                 dosageModal.classList.remove('active');
+            } else if (patientModal.classList.contains('active')) {
+                patientModal.classList.remove('active');
             } else if (searchInput.value) {
                 searchInput.value = '';
                 renderProducts('');
@@ -95,6 +157,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // --- Patient Information Logic ---
+
+    patientTrigger.onclick = () => {
+        inputPatientName.value = patientData.name;
+        inputPatientPhone.value = patientData.phone;
+        inputPrescriptionDate.value = patientData.date;
+        patientModal.classList.add('active');
+    };
+
+    btnCancelPatient.onclick = () => {
+        patientModal.classList.remove('active');
+    };
+
+    btnSavePatient.onclick = () => {
+        patientData.name = inputPatientName.value;
+        patientData.phone = inputPatientPhone.value;
+        patientData.date = inputPrescriptionDate.value;
+
+        patientNameDisplay.textContent = patientData.name || 'Clique para preencher';
+        patientModal.classList.remove('active');
+    };
 
     // --- Modal Logic ---
 
@@ -382,9 +466,115 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Prescription Generation Logic ---
+
+    const prescriptionModal = document.getElementById('prescription-modal');
+    const displayPatientName = document.getElementById('display-patient-name');
+    const displayPatientPhone = document.getElementById('display-patient-phone');
+    const displayDate = document.getElementById('display-date');
+    const prescriptionItemsList = document.getElementById('prescription-items-list');
+    const btnClosePrescription = document.getElementById('btn-close-prescription');
+    const btnPrint = document.getElementById('btn-print');
+    const btnWhatsapp = document.getElementById('btn-whatsapp');
+
+    function generatePrescription() {
+        displayPatientName.textContent = patientData.name || 'Não informado';
+        displayPatientPhone.textContent = patientData.phone ? `Telefone: ${patientData.phone}` : '';
+
+        // Format date
+        const [year, month, day] = patientData.date.split('-');
+        displayDate.textContent = `Data: ${day}/${month}/${year}`;
+
+        prescriptionItemsList.innerHTML = '';
+
+        selectedProducts.forEach((data, name) => {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'prescribed-item-card';
+
+            let posology;
+            if (data.isComplex) {
+                posology = `
+                    <div class="item-posology">
+                        <p>• ${data.spray} kit completo</p>
+                        <p>• Duração: ${data.days} dias</p>
+                        <div style="font-size: 0.8rem; margin-top: 8px;">
+                            Posologia Individual:<br>
+                            Care 1: ${data.care1} borrifadas, V.O. | Care 2: ${data.care2} borrifadas, V.O.<br>
+                            Care 3: ${data.care3} borrifadas, V.O. | Care 4: ${data.care4} borrifadas, V.O.
+                        </div>
+                    </div>
+                `;
+            } else {
+                posology = `
+                    <div class="item-posology">
+                        <p>Borrifar ${data.dosage} vezes, V.O., 4x ao dia, por 7 dias</p>
+                    </div>
+                `;
+            }
+
+            const storeUrl = productLinks[name] || 'https://www.essentialenergy.com.br';
+
+            itemCard.innerHTML = `
+                <img src="Logos-produtos-EE/${getLogo(name)}" alt="${name}" class="item-logo-small">
+                <div class="item-details">
+                    <div class="item-header-row">
+                        <h4>${name}</h4>
+                        <span class="item-underline"></span>
+                        <span style="font-size: 0.9rem;">${data.spray} ${data.isComplex ? 'kit' : 'frasco(s) spray'}</span>
+                    </div>
+                    ${posology}
+                </div>
+                <a href="${storeUrl}" target="_blank" class="btn-buy">🛒 Comprar</a>
+            `;
+            prescriptionItemsList.appendChild(itemCard);
+        });
+
+        prescriptionModal.classList.add('active');
+    }
+
     btnSubmit.addEventListener('click', () => {
-        alert('Gerando Receituário com ' + selectedProducts.size + ' produtos...');
+        if (!patientData.name) {
+            if (confirm('O nome do paciente não foi preenchido. Deseja preencher agora?')) {
+                patientTrigger.click();
+                return;
+            }
+        }
+        generatePrescription();
     });
+
+    btnClosePrescription.onclick = () => {
+        prescriptionModal.classList.remove('active');
+    };
+
+    btnPrint.onclick = () => {
+        window.print();
+    };
+
+    btnWhatsapp.onclick = () => {
+        let text = `*RECEITUÁRIO DIGITAL - ESSENTIAL ENERGY*\n\n`;
+        text += `*Paciente:* ${patientData.name || 'Não informado'}\n`;
+        text += `*Data:* ${displayDate.textContent.split(': ')[1]}\n\n`;
+        text += `--- *ITENS PRESCRITOS* ---\n\n`;
+
+        selectedProducts.forEach((data, name) => {
+            text += `*${name}* ---- ${data.spray} ${data.isComplex ? 'kit' : 'frasco(s)'}\n`;
+            if (data.isComplex) {
+                text += `  • Duração: ${data.days} dias\n`;
+                text += `  • Care 1: ${data.care1} x V.O. | Care 2: ${data.care2} x V.O.\n`;
+                text += `  • Care 3: ${data.care3} x V.O. | Care 4: ${data.care4} x V.O.\n`;
+            } else {
+                text += `  • Borrifar ${data.dosage} vezes, V.O., 4x ao dia, por 7 dias\n`;
+            }
+            text += `  Compre aqui: ${productLinks[name] || 'Site Oficial'}\n\n`;
+        });
+
+        text += `\n`; // Empty area as requested
+
+        const encodedText = encodeURIComponent(text);
+        const phone = patientData.phone.replace(/\D/g, '');
+        const waUrl = `https://wa.me/${phone}?text=${encodedText}`;
+        window.open(waUrl, '_blank');
+    };
 
     renderProducts();
 });

@@ -32,7 +32,10 @@
         <aside class="sidebar-section">
             <div class="glass-sidebar">
                 <header class="sidebar-header">
-                    <h2>Seus Selecionados</h2>
+                    <div class="patient-info-trigger" id="patient-trigger">
+                        <span class="label">Paciente:</span>
+                        <span class="value" id="patient-name-display">Clique para preencher</span>
+                    </div>
                     <div class="product-badge" id="selected-count">0</div>
                 </header>
 
@@ -112,13 +115,79 @@
         </div>
     </div>
 
-    <!-- Modal de Sucesso -->
-    <div class="modal-overlay" id="success-modal">
-        <div class="prescription-preview-card">
-            <h2>Receituário Gerado</h2>
-            <div class="preview-actions">
-                <button class="btn-primary" id="close-success">Fechar</button>
-            </div>
+    <!-- Modal de Receituário Final -->
+    <div class="modal-overlay" id="prescription-modal">
+        <div class="modal-content prescription-modal-content">
+            <section class="prescription-card printable-area" id="final-prescription-card">
+                <header class="prescription-header">
+                    <img src="Logos-produtos-EE/Essential-Energy-Logo.Png" alt="Essential Energy" class="header-logo">
+                    <div class="header-info">
+                        <h2>RECEITUÁRIO DIGITAL</h2>
+                        <p class="date-display" id="display-date"></p>
+                    </div>
+                </header>
+
+                <div class="patient-banner">
+                    <p>Paciente: <strong id="display-patient-name"></strong></p>
+                    <p id="display-patient-phone"></p>
+                </div>
+
+                <div class="prescribed-items" id="prescription-items-list">
+                    <!-- Itens inseridos via JS -->
+                </div>
+
+                <div class="general-instructions">
+                    <p>&nbsp;</p>
+                    <p class="manual-note-line"></p>
+                </div>
+
+                <div class="signature-area">
+                    <div class="sig-line"></div>
+                    <p><strong>Dra. Lucy Harasawa</strong></p>
+                    <p>Consultora de Saúde</p>
+                </div>
+            </section>
+
+            <footer class="prescription-actions">
+                <button class="btn-action whatsapp" id="btn-whatsapp">
+                    <span>📱 WhatsApp</span>
+                </button>
+                <button class="btn-action print" id="btn-print">
+                    <span>🖨️ Imprimir / PDF</span>
+                </button>
+                <button class="btn-secondary" id="btn-close-prescription">Fechar</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal de Dados do Paciente -->
+    <div class="modal-overlay" id="patient-modal">
+        <div class="modal-content">
+            <section class="prescription-card">
+                <header class="card-header-dosage">
+                    <h2 class="product-name-dosage">Dados do Paciente</h2>
+                </header>
+                <div class="card-content-dosage">
+                    <div class="input-group">
+                        <label class="group-label">Nome Completo</label>
+                        <input type="text" id="input-patient-name" class="custom-text-input"
+                            placeholder="Ex: João Silva">
+                    </div>
+                    <div class="input-group">
+                        <label class="group-label">Telefone / WhatsApp</label>
+                        <input type="text" id="input-patient-phone" class="custom-text-input"
+                            placeholder="(00) 00000-0000">
+                    </div>
+                    <div class="input-group">
+                        <label class="group-label">Data do Receituário</label>
+                        <input type="date" id="input-prescription-date" class="custom-text-input">
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="btn-secondary" id="btn-cancel-patient">Cancelar</button>
+                    <button class="btn-primary" id="btn-save-patient">Salvar Dados</button>
+                </footer>
+            </section>
         </div>
     </div>
 
