@@ -404,6 +404,23 @@ body {
     opacity: 0.6;
 }
 
+.product-card.active {
+    background: rgba(var(--neon-blue-rgb), 0.1);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 20px rgba(var(--neon-blue-rgb), 0.2);
+}
+
+.product-card.search-highlight {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 25px rgba(var(--neon-blue-rgb), 0.4);
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.product-logo-container {
+    font-size: 1.2rem;
+}
+
 .chip.active {
     background: var(--accent-primary);
     border-color: var(--neon-blue);

@@ -107,11 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
         productsGrid.innerHTML = '';
         const filtered = products.filter(p => p.toLowerCase().includes(filter.toLowerCase()));
 
-        filtered.forEach(name => {
+        filtered.forEach((name, index) => {
             const isActive = selectedProducts.has(name);
             const cardData = selectedProducts.get(name);
             const card = document.createElement('div');
-            card.className = `product-card ${isActive ? 'active' : 'dormant'}`;
+
+            // Highlight first result if searching
+            const isFirstMatch = filter && index === 0;
+            card.className = `product-card ${isActive ? 'active' : 'dormant'} ${isFirstMatch ? 'search-highlight' : ''}`;
 
             card.innerHTML = `
                 <div class="product-logo-container">
@@ -137,6 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
         clearSearch.style.display = e.target.value ? 'block' : 'none';
     });
 
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const firstCard = productsGrid.querySelector('.product-card');
+            if (firstCard) {
+                const productName = firstCard.querySelector('.product-name').textContent;
+                openDosageModal(productName);
+            }
+        }
+    });
+
     clearSearch.onclick = () => {
         searchInput.value = '';
         renderProducts('');
@@ -147,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (dosageModal.classList.contains('active')) {
-                dosageModal.classList.remove('active');
+                closeDosageModalAndFocusSearch();
             } else if (patientModal.classList.contains('active')) {
                 patientModal.classList.remove('active');
             } else if (searchInput.value) {
@@ -215,6 +228,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         dosageModal.classList.add('active');
+
+        // Auto-focus confirm button to allow instant Enter
+        setTimeout(() => {
+            btnConfirmDosage.focus();
+        }, 50);
+    }
+
+    function closeDosageModalAndFocusSearch() {
+        dosageModal.classList.remove('active');
+        setTimeout(() => {
+            searchInput.focus();
+            searchInput.select();
+        }, 100);
     }
 
     function renderStandardDosage(container) {
@@ -392,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         selectedProducts.set(currentProductEditing, data);
-        dosageModal.classList.remove('active');
+        closeDosageModalAndFocusSearch();
         updateUI();
     };
 
@@ -404,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     btnCancelDosage.onclick = () => {
-        dosageModal.classList.remove('active');
+        closeDosageModalAndFocusSearch();
     };
 
     // --- Sidebar & General UI ---
