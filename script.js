@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const logoMap = {
-        "Microclear Energy": "Micro-Clear-Energy.Png",
-        "Natural Care Four": "Natural-Care-Four.png",
-        "Life Energy": "Life-Energy.Png",
-        "Refresh Energy": "Refresh-Energy.png"
+        "Microclear Energy": "Micro-Clear-Energy.jpg",
+        "Natural Care Four": "Natural-Care-Four.jpg",
+        "Life Energy": "Life-Energy.jpg",
+        "Refresh Energy": "Refresh-Energy.jpg"
     };
 
     const productLinks = {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getLogo(name) {
         if (logoMap[name]) return logoMap[name];
-        return name.replace(/ /g, "-") + ".Png";
+        return name.replace(/ /g, "-") + ".jpg";
     }
 
     function renderProducts(filter = '') {
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="product-logo-container">
                     <div class="logo-glow"></div>
-                    <img src="Logos-produtos-EE/${getLogo(name)}" alt="${name}" class="product-logo" onerror="this.src='Logos-produtos-EE/Essential-Energy-Logo.Png'">
+                    <img src="Logos-produtos-EE/${getLogo(name)}" alt="${name}" class="product-logo" onerror="this.src='Logos-produtos-EE/Essential-Energy-Logo.jpg'">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${name}</h3>
@@ -521,19 +521,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.isComplex) {
                 posology = `
                     <div class="item-posology">
-                        <p>• ${data.spray} kit completo</p>
                         <p>• Duração: ${data.days} dias</p>
                         <div style="font-size: 0.8rem; margin-top: 8px;">
                             Posologia Individual:<br>
-                            Care 1: ${data.care1} borrifadas, V.O. | Care 2: ${data.care2} borrifadas, V.O.<br>
-                            Care 3: ${data.care3} borrifadas, V.O. | Care 4: ${data.care4} borrifadas, V.O.
+                            Care 1: ${data.care1} borrifadas, Via Oral | Care 2: ${data.care2} borrifadas, Via Oral<br>
+                            Care 3: ${data.care3} borrifadas, Via Oral | Care 4: ${data.care4} borrifadas, Via Oral
                         </div>
                     </div>
                 `;
             } else {
                 posology = `
                     <div class="item-posology">
-                        <p>Borrifar ${data.dosage} vezes, V.O., 4x ao dia, por 7 dias</p>
+                        <p>Borrifar ${data.dosage} vezes, Via Oral, 4x ao dia, por 7 dias</p>
                     </div>
                 `;
             }
@@ -586,10 +585,10 @@ document.addEventListener('DOMContentLoaded', () => {
             text += `*${name}* ---- ${data.spray} ${data.isComplex ? 'kit' : 'frasco(s)'}\n`;
             if (data.isComplex) {
                 text += `  • Duração: ${data.days} dias\n`;
-                text += `  • Care 1: ${data.care1} x V.O. | Care 2: ${data.care2} x V.O.\n`;
-                text += `  • Care 3: ${data.care3} x V.O. | Care 4: ${data.care4} x V.O.\n`;
+                text += `  • Care 1: ${data.care1} x Via Oral | Care 2: ${data.care2} x Via Oral\n`;
+                text += `  • Care 3: ${data.care3} x Via Oral | Care 4: ${data.care4} x Via Oral\n`;
             } else {
-                text += `  • Borrifar ${data.dosage} vezes, V.O., 4x ao dia, por 7 dias\n`;
+                text += `  • Borrifar ${data.dosage} vezes, Via Oral, 4x ao dia, por 7 dias\n`;
             }
             text += `  Compre aqui: ${productLinks[name] || 'Site Oficial'}\n\n`;
         });
