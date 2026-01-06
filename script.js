@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPatientName.textContent = patientData.name || 'Não informado';
         displayPatientPhone.textContent = patientData.phone ? `Telefone: ${patientData.phone}` : '';
 
-        // Format date
+        // Format date: dd/mm/yyyy
         const [year, month, day] = patientData.date.split('-');
         displayDate.textContent = `Data: ${day}/${month}/${year}`;
 
