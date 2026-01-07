@@ -1,66 +1,66 @@
 document.addEventListener('DOMContentLoaded', () => {
     const products = [
-        "Life Energy", "Imuno Energy", "Balance Energy", "Brain Energy", "Circulatory Energy",
-        "Harmony Energy", "Digest Energy", "Pancreatic Energy", "Cardio Energy", "Microclear Energy",
-        "Wellness Energy", "Chakras Energy", "Dental Energy", "Renew Energy", "Intestinal Energy",
-        "Quantum Energy", "Respiratory Energy", "Night Energy", "Natural Energy", "Body Energy",
-        "Urinary Energy", "Restore Energy", "Female Energy", "Male Energy", "Organs Energy",
-        "Protection Energy", "Fast Energy", "Booster Energy", "Shield Energy", "Vital Energy",
-        "Innova Energy", "Bio Energy", "Pure Energy", "Herbs Energy", "Guardian Energy",
-        "Optimum Energy", "Human Energy", "Pleasant Energy", "Defense Energy", "Extreme Energy",
-        "Natural Care Four", "Refresh Energy"
+        "1. Life Energy", "2. Imuno Energy", "3. Balance Energy", "4. Brain Energy", "5. Circulatory Energy",
+        "6. Harmony Energy", "7. Digest Energy", "8. Pancreatic Energy", "9. Cardio Energy", "10. Microclear Energy",
+        "11. Wellness Energy", "12. Chakras Energy", "13. Dental Energy", "14. Renew Energy", "15. Intestinal Energy",
+        "16. Quantum Energy", "17. Respiratory Energy", "18. Night Energy", "19. Natural Energy", "20. Body Energy",
+        "21. Urinary Energy", "22. Restore Energy", "23. Female Energy", "24. Male Energy", "25. Organs Energy",
+        "26. Protection Energy", "27. Fast Energy", "28. Booster Energy", "29. Shield Energy", "30. Vital Energy",
+        "31. Innova Energy", "32. Bio Energy", "33. Pure Energy", "34. Herbs Energy", "35. Guardian Energy",
+        "36. Optimum Energy", "37. Human Energy", "38. Pleasant Energy", "39. Defense Energy", "40. Extreme Energy",
+        "41. Natural Care Four", "42. Refresh Energy"
     ];
 
     const logoMap = {
-        "Microclear Energy": "Micro-Clear-Energy.jpg",
-        "Natural Care Four": "Natural-Care-Four.jpg",
-        "Life Energy": "Life-Energy.jpg",
-        "Refresh Energy": "Refresh-Energy.jpg"
+        "10. Microclear Energy": "Micro-Clear-Energy.jpg",
+        "41. Natural Care Four": "Natural-Care-Four.jpg",
+        "1. Life Energy": "Life-Energy.jpg",
+        "42. Refresh Energy": "Refresh-Energy.jpg"
     };
 
     const productLinks = {
-        "Life Energy": "https://www.essentialenergy.com.br/essencias/life-energy-30ml",
-        "Imuno Energy": "https://www.essentialenergy.com.br/essencias/imuno-energy-30ml",
-        "Balance Energy": "https://www.essentialenergy.com.br/essencias/balance-energy-30ml",
-        "Brain Energy": "https://www.essentialenergy.com.br/essencias/brain-energy-30ml",
-        "Circulatory Energy": "https://www.essentialenergy.com.br/essencias/circulatory-energy-30ml",
-        "Harmony Energy": "https://www.essentialenergy.com.br/essencias/harmony-energy-30ml",
-        "Digest Energy": "https://www.essentialenergy.com.br/essencias/digest-energy-30ml",
-        "Pancreatic Energy": "https://www.essentialenergy.com.br/essencias/pancreatic-energy-30ml",
-        "Cardio Energy": "https://www.essentialenergy.com.br/essencias/cardio-energy-30ml",
-        "Microclear Energy": "https://www.essentialenergy.com.br/essencias/micro-clear-energy-30ml",
-        "Wellness Energy": "https://www.essentialenergy.com.br/essencias/wellness-energy-30ml",
-        "Chakras Energy": "https://www.essentialenergy.com.br/essencias/chakras-energy-30ml",
-        "Dental Energy": "https://www.essentialenergy.com.br/essencias/dental-energy-30ml",
-        "Renew Energy": "https://www.essentialenergy.com.br/essencias/renew-energy-30ml",
-        "Intestinal Energy": "https://www.essentialenergy.com.br/essencias/intestinal-energy-30ml",
-        "Quantum Energy": "https://www.essentialenergy.com.br/essencias/quantum-energy-30ml",
-        "Respiratory Energy": "https://www.essentialenergy.com.br/essencias/respiratory-energy-30ml",
-        "Night Energy": "https://www.essentialenergy.com.br/essencias/night-energy-30ml",
-        "Natural Energy": "https://www.essentialenergy.com.br/essencias/natural-energy-30ml",
-        "Body Energy": "https://www.essentialenergy.com.br/essencias/body-energy-30ml",
-        "Urinary Energy": "https://www.essentialenergy.com.br/essencias/urinary-energy-30ml",
-        "Restore Energy": "https://www.essentialenergy.com.br/essencias/restore-energy-30ml",
-        "Female Energy": "https://www.essentialenergy.com.br/essencias/female-energy-30ml",
-        "Male Energy": "https://www.essentialenergy.com.br/essencias/male-energy-30ml",
-        "Organs Energy": "https://www.essentialenergy.com.br/essencias/organs-energy-30ml",
-        "Protection Energy": "https://www.essentialenergy.com.br/essencias/protection-energy-30ml",
-        "Fast Energy": "https://www.essentialenergy.com.br/essencias/fast-energy-30ml",
-        "Booster Energy": "https://www.essentialenergy.com.br/essencias/booster-energy-30ml",
-        "Shield Energy": "https://www.essentialenergy.com.br/essencias/shield-energy-30ml",
-        "Vital Energy": "https://www.essentialenergy.com.br/essencias/vital-energy-30ml",
-        "Innova Energy": "https://www.essentialenergy.com.br/essencias/innova-energy-30ml",
-        "Bio Energy": "https://www.essentialenergy.com.br/essencias/bio-energy-30ml",
-        "Pure Energy": "https://www.essentialenergy.com.br/essencias/pure-energy-30ml",
-        "Herbs Energy": "https://www.essentialenergy.com.br/essencias/herbs-energy-30ml",
-        "Guardian Energy": "https://www.essentialenergy.com.br/essencias/guardian-energy-30ml",
-        "Optimum Energy": "https://www.essentialenergy.com.br/essencias/optimun-energy-30ml",
-        "Human Energy": "https://www.essentialenergy.com.br/essencias/human-energy-30ml",
-        "Pleasant Energy": "https://www.essentialenergy.com.br/essencias/pleasant-energy-15ml",
-        "Defense Energy": "https://www.essentialenergy.com.br/essencias/defense-energy-30ml",
-        "Extreme Energy": "https://www.essentialenergy.com.br/essencias/extreme-energy-30ml",
-        "Natural Care Four": "https://www.essentialenergy.com.br/essencias-naturais/natural-care-four-10ml",
-        "Refresh Energy": "https://www.essentialenergy.com.br/essencias/refresh-energy-30ml"
+        "1. Life Energy": "https://www.essentialenergy.com.br/essencias/life-energy-30ml",
+        "2. Imuno Energy": "https://www.essentialenergy.com.br/essencias/imuno-energy-30ml",
+        "3. Balance Energy": "https://www.essentialenergy.com.br/essencias/balance-energy-30ml",
+        "4. Brain Energy": "https://www.essentialenergy.com.br/essencias/brain-energy-30ml",
+        "5. Circulatory Energy": "https://www.essentialenergy.com.br/essencias/circulatory-energy-30ml",
+        "6. Harmony Energy": "https://www.essentialenergy.com.br/essencias/harmony-energy-30ml",
+        "7. Digest Energy": "https://www.essentialenergy.com.br/essencias/digest-energy-30ml",
+        "8. Pancreatic Energy": "https://www.essentialenergy.com.br/essencias/pancreatic-energy-30ml",
+        "9. Cardio Energy": "https://www.essentialenergy.com.br/essencias/cardio-energy-30ml",
+        "10. Microclear Energy": "https://www.essentialenergy.com.br/essencias/micro-clear-energy-30ml",
+        "11. Wellness Energy": "https://www.essentialenergy.com.br/essencias/wellness-energy-30ml",
+        "12. Chakras Energy": "https://www.essentialenergy.com.br/essencias/chakras-energy-30ml",
+        "13. Dental Energy": "https://www.essentialenergy.com.br/essencias/dental-energy-30ml",
+        "14. Renew Energy": "https://www.essentialenergy.com.br/essencias/renew-energy-30ml",
+        "15. Intestinal Energy": "https://www.essentialenergy.com.br/essencias/intestinal-energy-30ml",
+        "16. Quantum Energy": "https://www.essentialenergy.com.br/essencias/quantum-energy-30ml",
+        "17. Respiratory Energy": "https://www.essentialenergy.com.br/essencias/respiratory-energy-30ml",
+        "18. Night Energy": "https://www.essentialenergy.com.br/essencias/night-energy-30ml",
+        "19. Natural Energy": "https://www.essentialenergy.com.br/essencias/natural-energy-30ml",
+        "20. Body Energy": "https://www.essentialenergy.com.br/essencias/body-energy-30ml",
+        "21. Urinary Energy": "https://www.essentialenergy.com.br/essencias/urinary-energy-30ml",
+        "22. Restore Energy": "https://www.essentialenergy.com.br/essencias/restore-energy-30ml",
+        "23. Female Energy": "https://www.essentialenergy.com.br/essencias/female-energy-30ml",
+        "24. Male Energy": "https://www.essentialenergy.com.br/essencias/male-energy-30ml",
+        "25. Organs Energy": "https://www.essentialenergy.com.br/essencias/organs-energy-30ml",
+        "26. Protection Energy": "https://www.essentialenergy.com.br/essencias/protection-energy-30ml",
+        "27. Fast Energy": "https://www.essentialenergy.com.br/essencias/fast-energy-30ml",
+        "28. Booster Energy": "https://www.essentialenergy.com.br/essencias/booster-energy-30ml",
+        "29. Shield Energy": "https://www.essentialenergy.com.br/essencias/shield-energy-30ml",
+        "30. Vital Energy": "https://www.essentialenergy.com.br/essencias/vital-energy-30ml",
+        "31. Innova Energy": "https://www.essentialenergy.com.br/essencias/innova-energy-30ml",
+        "32. Bio Energy": "https://www.essentialenergy.com.br/essencias/bio-energy-30ml",
+        "33. Pure Energy": "https://www.essentialenergy.com.br/essencias/pure-energy-30ml",
+        "34. Herbs Energy": "https://www.essentialenergy.com.br/essencias/herbs-energy-30ml",
+        "35. Guardian Energy": "https://www.essentialenergy.com.br/essencias/guardian-energy-30ml",
+        "36. Optimum Energy": "https://www.essentialenergy.com.br/essencias/optimun-energy-30ml",
+        "37. Human Energy": "https://www.essentialenergy.com.br/essencias/human-energy-30ml",
+        "38. Pleasant Energy": "https://www.essentialenergy.com.br/essencias/pleasant-energy-15ml",
+        "39. Defense Energy": "https://www.essentialenergy.com.br/essencias/defense-energy-30ml",
+        "40. Extreme Energy": "https://www.essentialenergy.com.br/essencias/extreme-energy-30ml",
+        "41. Natural Care Four": "https://www.essentialenergy.com.br/essencias-naturais/natural-care-four-10ml",
+        "42. Refresh Energy": "https://www.essentialenergy.com.br/essencias/refresh-energy-30ml"
     };
 
     // DOM Elements
@@ -106,7 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getLogo(name) {
         if (logoMap[name]) return logoMap[name];
-        return name.replace(/ /g, "-") + ".jpg";
+        // Remove a numeração do início (ex: "1. Life Energy" -> "Life Energy")
+        const cleanName = name.replace(/^\d+\.\s*/, "");
+        return cleanName.replace(/ /g, "-") + ".jpg";
     }
 
     function renderProducts(filter = '') {
@@ -212,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalSize = document.querySelector('.product-name-dosage .size');
 
         if (name === "Natural Care Four") {
-            modalSize.textContent = "'10ml cada'";
+            modalSize.textContent = "'10 ml'";
             renderNaturalCareFour(cardContent);
         } else {
             modalSize.textContent = "30ML";
@@ -321,7 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="care-section">
                     <h2>Care ${num}</h2>
                     <h3>BORRIFAR ___ ${pluralize(2, 'VEZ', 'VEZES')}</h3>
-                    <label class="care-label">Care ${num} : Borrifar ____ x Via Oral,</label>
                     <div class="chip-container" data-field="care${num}">
                         <button class="chip" data-value="1">1</button>
                         <button class="chip" data-value="2">2</button>
@@ -447,7 +448,14 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSubmit.disabled = true;
             btnSubmit.classList.add('disabled');
         } else {
-            selectedProducts.forEach((data, name) => {
+            // Ordenar produtos por número (ex: "1. Life Energy" -> 1)
+            const sortedProducts = [...selectedProducts.entries()].sort((a, b) => {
+                const numA = parseInt(a[0].match(/^\d+/)?.[0] || 0);
+                const numB = parseInt(b[0].match(/^\d+/)?.[0] || 0);
+                return numA - numB;
+            });
+
+            sortedProducts.forEach(([name, data]) => {
                 const item = document.createElement('div');
                 item.className = 'selected-item';
                 item.style = "padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;";
@@ -522,7 +530,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         prescriptionItemsList.innerHTML = '';
 
-        selectedProducts.forEach((data, name) => {
+        // Ordenar produtos por número (ex: "1. Life Energy" -> 1)
+        const sortedProducts = [...selectedProducts.entries()].sort((a, b) => {
+            const numA = parseInt(a[0].match(/^\d+/)?.[0] || 0);
+            const numB = parseInt(b[0].match(/^\d+/)?.[0] || 0);
+            return numA - numB;
+        });
+
+        sortedProducts.forEach(([name, data]) => {
             const itemCard = document.createElement('div');
             itemCard.className = 'prescribed-item-card';
 
