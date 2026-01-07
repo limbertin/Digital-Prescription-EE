@@ -618,7 +618,14 @@ document.addEventListener('DOMContentLoaded', () => {
         text += `*Data:* ${displayDate.textContent.split(': ')[1]}\n\n`;
         text += `--- *ITENS PRESCRITOS* ---\n\n`;
 
-        selectedProducts.forEach((data, name) => {
+        // Ordenar produtos por número (ex: "1. Life Energy" -> 1)
+        const sortedProducts = [...selectedProducts.entries()].sort((a, b) => {
+            const numA = parseInt(a[0].match(/^\d+/)?.[0] || 0);
+            const numB = parseInt(b[0].match(/^\d+/)?.[0] || 0);
+            return numA - numB;
+        });
+
+        sortedProducts.forEach(([name, data]) => {
             text += `*${name}* ---- ${data.spray} ${data.isComplex ? pluralize(data.spray, 'kit', 'kits') : pluralize(data.spray, 'frasco', 'frascos')}\n`;
             if (data.isComplex) {
                 text += `  • Duração: ${data.days} dias\n`;
