@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'ChampagneLimousines';
+    src: url('Logos-produtos-EE/ChampLim.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ChampagneLimousines';
+    src: url('Logos-produtos-EE/ChampLimB.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 :root {
     --accent-primary: #6366f1;
     --accent-secondary: #4f46e5;
@@ -19,7 +33,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'ChampagneLimousines', sans-serif;
     background: var(--bg-dark);
     color: var(--text-main);
     min-height: 100vh;
@@ -807,8 +821,13 @@ body {
     }
 
     .header-logo {
-        height: 70px;
+        height: 75px;
         /* Increased 1.5x from 60px */
+    }
+
+    .item-logo-small {
+    width: 80px !important;
+    height: 80px !important;
     }
 
     .prescribed-items {
@@ -846,7 +865,7 @@ body {
     }
 
     .patient-banner {
-        border-left: 4px solid #000 !important;
+        border-left: 1px solid #eee !important;
         margin-bottom: 15px;
         padding: 10px;
     }

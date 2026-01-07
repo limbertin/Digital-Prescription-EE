@@ -527,19 +527,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let posology;
             if (data.isComplex) {
+                let careDetails = "";
+                if (data.days === "7") {
+                    careDetails = `
+                        Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia na 1° semana<br>
+                        Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia na 2° semana<br>
+                        Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia na 3° semana<br>
+                        Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia na 4° semana
+                    `;
+                } else {
+                    careDetails = `
+                        Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia, nos dias 1 ao 5<br>
+                        Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia, nos dias 6 ao 10<br>
+                        Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia, nos dias 11 ao 15<br>
+                        Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia, nos dias 16 ao 20
+                    `;
+                }
                 posology = `
                     <div class="item-posology">
                         <div style="font-size: 0.8rem; margin-top: 8px;">
-                            Posologia Individual:<br>
-                            Care 1: ${data.care1} borrifadas, Via Oral | Care 2: ${data.care2} borrifadas, Via Oral<br>
-                            Care 3: ${data.care3} borrifadas, Via Oral | Care 4: ${data.care4} borrifadas, Via Oral
+                            ${careDetails}
                         </div>
                     </div>
                 `;
             } else {
                 posology = `
                     <div class="item-posology">
-                        <p>Borrifar ${data.dosage} vezes, Via Oral, 4x ao dia, por 7 dias</p>
+                        <p>Borrifar ${data.dosage} vezes, Via Oral, 4 vezes ao dia, por 7 dias</p>
                     </div>
                 `;
             }
@@ -592,10 +606,19 @@ document.addEventListener('DOMContentLoaded', () => {
             text += `*${name}* ---- ${data.spray} ${data.isComplex ? 'kit' : 'frasco(s)'}\n`;
             if (data.isComplex) {
                 text += `  • Duração: ${data.days} dias\n`;
-                text += `  • Care 1: ${data.care1} x Via Oral | Care 2: ${data.care2} x Via Oral\n`;
-                text += `  • Care 3: ${data.care3} x Via Oral | Care 4: ${data.care4} x Via Oral\n`;
+                if (data.days === "7") {
+                    text += `  • Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia na 1 semana\n`;
+                    text += `  • Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia na 2 semana\n`;
+                    text += `  • Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia na 3 semana\n`;
+                    text += `  • Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia na 4 semana\n`;
+                } else {
+                    text += `  • Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia, do dia 1–5\n`;
+                    text += `  • Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia, do dia 6–10\n`;
+                    text += `  • Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia, do dia 11–15\n`;
+                    text += `  • Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia, do dia 16–20\n`;
+                }
             } else {
-                text += `  • Borrifar ${data.dosage} vezes, Via Oral, 4x ao dia, por 7 dias\n`;
+                text += `  • Borrifar ${data.dosage} vezes, Via Oral, 4 vezes ao dia, por 7 dias\n`;
             }
             text += `  Compre aqui: ${productLinks[name] || 'Site Oficial'}\n\n`;
         });
