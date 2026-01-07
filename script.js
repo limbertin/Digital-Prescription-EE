@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let patientData = {
         name: '',
         phone: '',
+        ddi: '55',
         date: new Date().toISOString().split('T')[0]
     };
 
@@ -91,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const patientTrigger = document.getElementById('patient-trigger');
     const patientNameDisplay = document.getElementById('patient-name-display');
     const inputPatientName = document.getElementById('input-patient-name');
+    const inputPatientDdi = document.getElementById('input-patient-ddi');
     const inputPatientPhone = document.getElementById('input-patient-phone');
     const inputPrescriptionDate = document.getElementById('input-prescription-date');
     const btnSavePatient = document.getElementById('btn-save-patient');
@@ -175,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     patientTrigger.onclick = () => {
         inputPatientName.value = patientData.name;
+        inputPatientDdi.value = patientData.ddi;
         inputPatientPhone.value = patientData.phone;
         inputPrescriptionDate.value = patientData.date;
         patientModal.classList.add('active');
@@ -186,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnSavePatient.onclick = () => {
         patientData.name = inputPatientName.value;
+        patientData.ddi = inputPatientDdi.value;
         patientData.phone = inputPatientPhone.value;
         patientData.date = inputPrescriptionDate.value;
 
@@ -316,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="care-section">
                     <h2>Care ${num}</h2>
                     <h3>BORRIFAR ___ VEZES</h3>
-                    <label class="care-label">Care ${num} : Borrifar ____ x VO,</label>
+                    <label class="care-label">Care ${num} : Borrifar ____ x Via Oral,</label>
                     <div class="chip-container" data-field="care${num}">
                         <button class="chip" data-value="1">1</button>
                         <button class="chip" data-value="2">2</button>
@@ -505,6 +509,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generatePrescription() {
         displayPatientName.textContent = patientData.name || 'Não informado';
+        const displayPhoneRow = document.getElementById('display-patient-phone-row');
+        if (displayPhoneRow) {
+            displayPhoneRow.textContent = patientData.phone ? ` - ${patientData.phone}` : '';
+        }
         displayPatientPhone.textContent = patientData.phone ? `Telefone: ${patientData.phone}` : '';
 
         // Format date: dd/mm/yyyy
@@ -521,7 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.isComplex) {
                 posology = `
                     <div class="item-posology">
-                        <p>• Duração: ${data.days} dias</p>
                         <div style="font-size: 0.8rem; margin-top: 8px;">
                             Posologia Individual:<br>
                             Care 1: ${data.care1} borrifadas, Via Oral | Care 2: ${data.care2} borrifadas, Via Oral<br>
@@ -543,9 +550,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="Logos-produtos-EE/${getLogo(name)}" alt="${name}" class="item-logo-small">
                 <div class="item-details">
                     <div class="item-header-row">
-                        <h4>${name}</h4>
-                        <span class="item-underline"></span>
-                        <span style="font-size: 0.9rem;">${data.spray} ${data.isComplex ? 'kit' : 'frasco(s) spray'}</span>
+                        <div class="item-name-col"><h4>${name}</h4></div>
+                        <div class="item-line-col"></div>
+                        <div class="item-qty-col">${data.spray} ${data.isComplex ? 'kit' : 'frasco(s) spray'}</div>
                     </div>
                     ${posology}
                 </div>
@@ -596,8 +603,8 @@ document.addEventListener('DOMContentLoaded', () => {
         text += `\n`; // Empty area as requested
 
         const encodedText = encodeURIComponent(text);
-        const phone = patientData.phone.replace(/\D/g, '');
-        const waUrl = `https://wa.me/${phone}?text=${encodedText}`;
+        const phoneDigits = (patientData.ddi + patientData.phone).replace(/\D/g, '');
+        const waUrl = `https://wa.me/${phoneDigits}?text=${encodedText}`;
         window.open(waUrl, '_blank');
     };
 

@@ -128,8 +128,8 @@
                 </header>
 
                 <div class="patient-banner">
-                    <p>Paciente: <strong id="display-patient-name"></strong></p>
-                    <p id="display-patient-phone"></p>
+                    <p>Paciente: <strong id="display-patient-name"></strong> <span id="display-patient-phone-row" style="margin-left: 10px; opacity: 0.8;"></span></p>
+                    <p id="display-patient-phone" style="display:none;"></p>
                 </div>
 
                 <div class="prescribed-items" id="prescription-items-list">
@@ -175,8 +175,12 @@
                     </div>
                     <div class="input-group">
                         <label class="group-label">Telefone / WhatsApp</label>
-                        <input type="text" id="input-patient-phone" class="custom-text-input"
-                            placeholder="(00) 00000-0000">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="input-patient-ddi" class="custom-text-input"
+                                placeholder="DDI" value="55" style="width: 60px; text-align: center;">
+                            <input type="text" id="input-patient-phone" class="custom-text-input"
+                                placeholder="(00) 00000-0000" style="flex-grow: 1;">
+                        </div>
                     </div>
                     <div class="input-group">
                         <label class="group-label">Data do Receituário</label>
