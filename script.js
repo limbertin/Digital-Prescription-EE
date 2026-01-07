@@ -70,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSubmit = document.getElementById('btn-submit');
     const btnReset = document.getElementById('btn-reset');
     const searchInput = document.getElementById('search-input');
+    const btnCopy = document.getElementById('btn-copy');
+
+    // Initial Focus
+    setTimeout(() => {
+        searchInput.focus();
+    }, 100);
 
     // Modal Elements
     const dosageModal = document.getElementById('dosage-modal');
@@ -169,6 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             if (dosageModal.classList.contains('active')) {
                 closeDosageModalAndFocusSearch();
+            } else if (prescriptionModal.classList.contains('active')) {
+                closePrescriptionModalAndFocusSearch();
             } else if (patientModal.classList.contains('active')) {
                 patientModal.classList.remove('active');
             } else if (searchInput.value) {
@@ -247,6 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeDosageModalAndFocusSearch() {
         dosageModal.classList.remove('active');
+        setTimeout(() => {
+            searchInput.focus();
+            searchInput.select();
+        }, 100);
+    }
+
+    function closePrescriptionModalAndFocusSearch() {
+        prescriptionModal.classList.remove('active');
         setTimeout(() => {
             searchInput.focus();
             searchInput.select();
@@ -592,6 +608,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         prescriptionModal.classList.add('active');
+
+        // Auto-focus Print button to allow instant Enter
+        setTimeout(() => {
+            btnPrint.focus();
+        }, 50);
     }
 
     btnSubmit.addEventListener('click', () => {
@@ -605,12 +626,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnClosePrescription.onclick = () => {
-        prescriptionModal.classList.remove('active');
+        closePrescriptionModalAndFocusSearch();
     };
 
     btnPrint.onclick = () => {
         window.print();
     };
+
+    // Tab Loop Logic for Prescription Modal
+    const modalActions = [btnPrint, btnWhatsapp, btnClosePrescription];
+    modalActions.forEach((btn, index) => {
+        btn.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) { // Tab Backwards
+                    if (document.activeElement === btnPrint) {
+                        e.preventDefault();
+                        btnClosePrescription.focus();
+                    }
+                } else { // Tab Forwards
+                    if (document.activeElement === btnClosePrescription) {
+                        e.preventDefault();
+                        btnPrint.focus();
+                    }
+                }
+            }
+        });
+    });
 
     btnWhatsapp.onclick = () => {
         let text = `*RECEITUÁRIO DIGITAL - ESSENTIAL ENERGY*\n\n`;
@@ -653,6 +694,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const phoneDigits = (patientData.ddi + patientData.phone).replace(/\D/g, '');
         const waUrl = `https://wa.me/${phoneDigits}?text=${encodedText}`;
         window.open(waUrl, '_blank');
+    };
+
+    // Global Tab Loop Logic (Dashboard)
+    // Ordem: Busca -> Paciente -> "X" (Remover) -> Gerar Receituário -> Copiar Última -> Limpar Tudo -> (volta para busca)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            // Only handle if no modal is active
+            const anyModalActive = document.querySelector('.modal-overlay.active');
+            if (anyModalActive) return;
+
+            e.preventDefault(); // Sempre prevenir comportamento padrão do Tab
+
+            const removeButtons = Array.from(sidebarList.querySelectorAll('.remove-btn'));
+            // Ordem: Busca(1) -> Paciente(2) -> Remove(3) -> Gerar(4) -> Copiar(5) -> Limpar(6)
+            const mainCycle = [searchInput, patientTrigger, ...removeButtons, btnSubmit, btnCopy, btnReset];
+
+            // Filter out missing or disabled buttons (to prevent stuck focus)
+            const focusableItems = mainCycle.filter(item => item && !item.disabled && item.offsetParent !== null);
+            if (focusableItems.length === 0) return;
+
+            const currentIndex = focusableItems.indexOf(document.activeElement);
+
+            let nextIndex;
+            if (e.shiftKey) { // Backwards
+                nextIndex = currentIndex <= 0 ? focusableItems.length - 1 : currentIndex - 1;
+            } else { // Forwards
+                nextIndex = currentIndex >= focusableItems.length - 1 ? 0 : currentIndex + 1;
+            }
+
+            focusableItems[nextIndex].focus();
+        }
+    });
+
+    btnCopy.onclick = () => {
+        // Placeholder for future logic
+        console.log('Copiar Última clicked');
     };
 
     renderProducts();

@@ -17,8 +17,10 @@
             <header class="catalog-header">
                 <h1>Catálogo de Essências</h1>
                 <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Buscar essência..." autocomplete="off">
-                    <button id="clear-search" class="btn-clear-search" title="Limpar busca">&times;</button>
+                    <input type="text" id="search-input" placeholder="Buscar essência..." autocomplete="off"
+                        tabindex="1">
+                    <button id="clear-search" class="btn-clear-search" title="Limpar busca"
+                        tabindex="-1">&times;</button>
                 </div>
             </header>
 
@@ -31,7 +33,7 @@
         <aside class="sidebar-section">
             <div class="glass-sidebar">
                 <header class="sidebar-header">
-                    <div class="patient-info-trigger" id="patient-trigger">
+                    <div class="patient-info-trigger" id="patient-trigger" tabindex="2" role="button">
                         <span class="label">Paciente:</span>
                         <span class="value" id="patient-name-display">Clique para preencher</span>
                     </div>
@@ -43,10 +45,11 @@
                 </div>
 
                 <div class="sidebar-footer">
-                    <button class="btn-primary disabled" id="btn-submit" disabled>Gerar Receituário</button>
+                    <button class="btn-primary disabled" id="btn-submit" disabled tabindex="4">Gerar
+                        Receituário</button>
                     <div class="secondary-actions">
-                        <button class="btn-secondary" id="btn-copy">Copiar Última</button>
-                        <button class="btn-secondary danger" id="btn-reset">Limpar Tudo</button>
+                        <button class="btn-secondary" id="btn-copy" tabindex="5">Copiar Última</button>
+                        <button class="btn-secondary danger" id="btn-reset" tabindex="6">Limpar Tudo</button>
                     </div>
                 </div>
             </div>
@@ -127,7 +130,8 @@
                 </header>
 
                 <div class="patient-banner">
-                    <p>Paciente: <strong id="display-patient-name"></strong> <span id="display-patient-phone-row" style="margin-left: 10px; opacity: 0.8;"></span></p>
+                    <p>Paciente: <strong id="display-patient-name"></strong> <span id="display-patient-phone-row"
+                            style="margin-left: 10px; opacity: 0.8;"></span></p>
                     <p id="display-patient-phone" style="display:none;"></p>
                 </div>
 
@@ -148,11 +152,11 @@
             </section>
 
             <footer class="prescription-actions">
-                <button class="btn-action whatsapp" id="btn-whatsapp">
-                    <span>📱 WhatsApp</span>
-                </button>
                 <button class="btn-action print" id="btn-print">
                     <span>🖨️ Imprimir / PDF</span>
+                </button>
+                <button class="btn-action whatsapp" id="btn-whatsapp">
+                    <span>📱 WhatsApp</span>
                 </button>
                 <button class="btn-secondary" id="btn-close-prescription">Fechar</button>
             </footer>
@@ -175,8 +179,8 @@
                     <div class="input-group">
                         <label class="group-label">Telefone / WhatsApp</label>
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="input-patient-ddi" class="custom-text-input"
-                                placeholder="DDI" value="55" style="width: 60px; text-align: center;">
+                            <input type="text" id="input-patient-ddi" class="custom-text-input" placeholder="DDI"
+                                value="55" style="width: 60px; text-align: center;">
                             <input type="text" id="input-patient-phone" class="custom-text-input"
                                 placeholder="(00) 00000-0000" style="flex-grow: 1;">
                         </div>
