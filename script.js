@@ -616,7 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let text = `*RECEITUÁRIO DIGITAL - ESSENTIAL ENERGY*\n\n`;
         text += `*Paciente:* ${patientData.name || 'Não informado'}\n`;
         text += `*Data:* ${displayDate.textContent.split(': ')[1]}\n\n`;
-        text += `--- *ITENS PRESCRITOS* ---\n\n`;
+        const itemCount = selectedProducts.size;
+        text += `--- *${itemCount} ${pluralize(itemCount, 'ITEM PRESCRITO', 'ITENS PRESCRITOS')}* ---\n\n`;
 
         // Ordenar produtos por número (ex: "1. Life Energy" -> 1)
         const sortedProducts = [...selectedProducts.entries()].sort((a, b) => {
