@@ -435,7 +435,8 @@ body {
     font-size: 1.2rem;
 }
 
-.chip.active {
+.chip.active,
+.chip.custom-trigger.active {
     background: var(--accent-primary);
     border-color: var(--neon-blue);
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
@@ -449,13 +450,15 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--accent-primary);
-    padding: 5px 10px;
+    background: var(--accent-primary);
+    border: 1px solid var(--neon-blue);
+    padding: 5px 12px;
     border-radius: 12px;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
-.hidden {
+.custom-input-wrapper.hidden,
+.custom-trigger.hidden {
     display: none;
 }
 
@@ -826,8 +829,8 @@ body {
     }
 
     .item-logo-small {
-    width: 80px !important;
-    height: 80px !important;
+        width: 80px !important;
+        height: 80px !important;
     }
 
     .prescribed-items {

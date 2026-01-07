@@ -100,6 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Logic ---
 
+    function pluralize(count, singular, plural) {
+        return parseInt(count) === 1 ? singular : plural;
+    }
+
     function getLogo(name) {
         if (logoMap[name]) return logoMap[name];
         return name.replace(/ /g, "-") + ".jpg";
@@ -125,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${name}</h3>
-                    <p class="product-type">${isActive ? (cardData.isComplex ? `${cardData.spray} kit / ${cardData.days} dias` : `${cardData.spray} frascos / ${cardData.dosage} borrifadas`) : ''}</p>
+                    <p class="product-type">${isActive ? (cardData.isComplex ? `${cardData.spray} ${pluralize(cardData.spray, 'kit', 'kits')} / ${cardData.days} dias` : `${cardData.spray} ${pluralize(cardData.spray, 'frasco', 'frascos')} / ${cardData.dosage} ${pluralize(cardData.dosage, 'borrifada', 'borrifadas')}`) : ''}</p>
                 </div>
             `;
 
@@ -250,9 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderStandardDosage(container) {
         container.innerHTML = `
             <div class="input-group" id="group-spray">
-                <label class="group-label">Frascos spray</label>
+                <label class="group-label">${pluralize(1, 'Frasco', 'Frascos')} spray</label>
                 <div class="chip-container" data-field="spray">
-                    <button class="chip common" data-value="1">1 <small>mais comum</small></button>
+                    <button class="chip" data-value="1">1</button>
                     <button class="chip" data-value="2">2</button>
                     <button class="chip" data-value="3">3</button>
                     <button class="chip" data-value="4">4</button>
@@ -261,24 +265,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="btn-step minus">&minus;</button>
                         <span class="step-value">5</span>
                         <button class="btn-step plus">&plus;</button>
-                        <button class="btn-confirm-custom">OK</button>
                     </div>
                 </div>
             </div>
 
             <div class="input-group" id="group-dosage">
-                <label class="group-label">Borrifar ___ vezes</label>
+                <label class="group-label">Borrifar ___ ${pluralize(2, 'vez', 'vezes')}</label>
                 <div class="chip-container" data-field="dosage">
-                    <button class="chip common" data-value="3">3 <small>mais comum</small></button>
-                    <button class="chip common" data-value="4">4 <small>mais comum</small></button>
-                    <button class="chip" data-value="5">5</button>
-                    <button class="chip" data-value="6">6</button>
+                    <button class="chip" data-value="1">1</button>
+                    <button class="chip" data-value="2">2</button>
+                    <button class="chip" data-value="3">3</button>
+                    <button class="chip" data-value="4">4</button>
                     <button class="chip custom-trigger">&plusmn;</button>
                     <div class="custom-input-wrapper hidden">
                         <button class="btn-step minus">&minus;</button>
-                        <span class="step-value">8</span>
+                        <span class="step-value">5</span>
                         <button class="btn-step plus">&plus;</button>
-                        <button class="btn-confirm-custom">OK</button>
                     </div>
                 </div>
             </div>
@@ -292,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderNaturalCareFour(container) {
         container.innerHTML = `
             <div class="input-group">
-                <h3>FRASCOS SPRAY</h3>
+                <h3>${pluralize(2, 'FRASCO', 'FRASCOS')} SPRAY</h3>
                 <div class="chip-container" data-field="spray">
                     <button class="chip" data-value="1">1</button>
                     <button class="chip" data-value="2">2</button>
@@ -303,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="btn-step minus">&minus;</button>
                         <span class="step-value">5</span>
                         <button class="btn-step plus">&plus;</button>
-                        <button class="btn-confirm-custom">OK</button>
                     </div>
                 </div>
             </div>
@@ -319,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ${[1, 2, 3, 4].map(num => `
                 <div class="care-section">
                     <h2>Care ${num}</h2>
-                    <h3>BORRIFAR ___ VEZES</h3>
+                    <h3>BORRIFAR ___ ${pluralize(2, 'VEZ', 'VEZES')}</h3>
                     <label class="care-label">Care ${num} : Borrifar ____ x Via Oral,</label>
                     <div class="chip-container" data-field="care${num}">
                         <button class="chip" data-value="1">1</button>
@@ -331,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button class="btn-step minus">&minus;</button>
                             <span class="step-value">5</span>
                             <button class="btn-step plus">&plus;</button>
-                            <button class="btn-confirm-custom">OK</button>
                         </div>
                     </div>
                 </div>
@@ -347,7 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const stepValueDisplay = container.querySelector('.step-value');
 
         // Reset state (only if elements exist)
-        if (customTrigger) customTrigger.classList.remove('hidden');
+        if (customTrigger) {
+            customTrigger.classList.remove('hidden');
+            customTrigger.classList.remove('active');
+        }
         if (customWrapper) customWrapper.classList.add('hidden');
         chips.forEach(c => c.classList.remove('active'));
 
@@ -361,7 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.onclick = () => {
                 chips.forEach(c => c.classList.remove('active'));
                 chip.classList.add('active');
-                if (customTrigger) customTrigger.classList.remove('hidden');
+                if (customTrigger) {
+                    customTrigger.classList.remove('hidden');
+                    customTrigger.classList.remove('active');
+                }
                 if (customWrapper) customWrapper.classList.add('hidden');
             };
         });
@@ -393,11 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
             minusBtn.onclick = () => {
                 const val = parseInt(stepValueDisplay.textContent);
                 if (val > 1) stepValueDisplay.textContent = val - 1;
-            };
-        }
-        if (confirmBtn) {
-            confirmBtn.onclick = () => {
-                // Visual feedback only, value is read on Confirm Selection
             };
         }
     }
@@ -453,9 +454,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let detailText;
                 if (data.isComplex) {
-                    detailText = `${data.spray} kit | ${data.days} dias`;
+                    detailText = `${data.spray} ${pluralize(data.spray, 'kit', 'kits')} | ${data.days} dias`;
                 } else {
-                    detailText = `${data.spray} frascos | ${data.dosage} borrifadas`;
+                    detailText = `${data.spray} ${pluralize(data.spray, 'frasco', 'frascos')} | ${data.dosage} ${pluralize(data.dosage, 'borrifada', 'borrifadas')}`;
                 }
 
                 item.innerHTML = `
@@ -530,17 +531,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 let careDetails = "";
                 if (data.days === "7") {
                     careDetails = `
-                        Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia na 1° semana<br>
-                        Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia na 2° semana<br>
-                        Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia na 3° semana<br>
-                        Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia na 4° semana
+                        Care 1: Borrifar ${data.care1} ${pluralize(data.care1, 'vez', 'vezes')}, Via Oral, 4x ao dia na 1° semana<br>
+                        Care 2: Borrifar ${data.care2} ${pluralize(data.care2, 'vez', 'vezes')}, Via Oral, 4x ao dia na 2° semana<br>
+                        Care 3: Borrifar ${data.care3} ${pluralize(data.care3, 'vez', 'vezes')}, Via Oral, 4x ao dia na 3° semana<br>
+                        Care 4: Borrifar ${data.care4} ${pluralize(data.care4, 'vez', 'vezes')}, Via Oral, 4x ao dia na 4° semana
                     `;
                 } else {
                     careDetails = `
-                        Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia, nos dias 1 ao 5<br>
-                        Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia, nos dias 6 ao 10<br>
-                        Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia, nos dias 11 ao 15<br>
-                        Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia, nos dias 16 ao 20
+                        Care 1: Borrifar ${data.care1} ${pluralize(data.care1, 'vez', 'vezes')}, Via Oral, 4x ao dia, nos dias 1 ao 5<br>
+                        Care 2: Borrifar ${data.care2} ${pluralize(data.care2, 'vez', 'vezes')}, Via Oral, 4x ao dia, nos dias 6 ao 10<br>
+                        Care 3: Borrifar ${data.care3} ${pluralize(data.care3, 'vez', 'vezes')}, Via Oral, 4x ao dia, nos dias 11 ao 15<br>
+                        Care 4: Borrifar ${data.care4} ${pluralize(data.care4, 'vez', 'vezes')}, Via Oral, 4x ao dia, nos dias 16 ao 20
                     `;
                 }
                 posology = `
@@ -553,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 posology = `
                     <div class="item-posology">
-                        <p>Borrifar ${data.dosage} vezes, Via Oral, 4 vezes ao dia, por 7 dias</p>
+                        <p>Borrifar ${data.dosage} ${pluralize(data.dosage, 'vez', 'vezes')}, Via Oral, 4 vezes ao dia, por 7 dias</p>
                     </div>
                 `;
             }
@@ -566,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="item-header-row">
                         <div class="item-name-col"><h4>${name}</h4></div>
                         <div class="item-line-col"></div>
-                        <div class="item-qty-col">${data.spray} ${data.isComplex ? 'kit' : 'frasco(s) spray'}</div>
+                        <div class="item-qty-col">${data.spray} ${data.isComplex ? pluralize(data.spray, 'kit', 'kits') : pluralize(data.spray, 'frasco', 'frascos') + ' spray'}</div>
                     </div>
                     ${posology}
                 </div>
@@ -603,22 +604,22 @@ document.addEventListener('DOMContentLoaded', () => {
         text += `--- *ITENS PRESCRITOS* ---\n\n`;
 
         selectedProducts.forEach((data, name) => {
-            text += `*${name}* ---- ${data.spray} ${data.isComplex ? 'kit' : 'frasco(s)'}\n`;
+            text += `*${name}* ---- ${data.spray} ${data.isComplex ? pluralize(data.spray, 'kit', 'kits') : pluralize(data.spray, 'frasco', 'frascos')}\n`;
             if (data.isComplex) {
                 text += `  • Duração: ${data.days} dias\n`;
                 if (data.days === "7") {
-                    text += `  • Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia na 1 semana\n`;
-                    text += `  • Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia na 2 semana\n`;
-                    text += `  • Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia na 3 semana\n`;
-                    text += `  • Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia na 4 semana\n`;
+                    text += `  • Care 1: Borrifar ${data.care1} ${pluralize(data.care1, 'vez', 'vezes')}, Via Oral, 4x ao dia na 1 semana\n`;
+                    text += `  • Care 2: Borrifar ${data.care2} ${pluralize(data.care2, 'vez', 'vezes')}, Via Oral, 4x ao dia na 2 semana\n`;
+                    text += `  • Care 3: Borrifar ${data.care3} ${pluralize(data.care3, 'vez', 'vezes')}, Via Oral, 4x ao dia na 3 semana\n`;
+                    text += `  • Care 4: Borrifar ${data.care4} ${pluralize(data.care4, 'vez', 'vezes')}, Via Oral, 4x ao dia na 4 semana\n`;
                 } else {
-                    text += `  • Care 1: Borrifar ${data.care1} vezes, Via Oral, 4x ao dia, do dia 1–5\n`;
-                    text += `  • Care 2: Borrifar ${data.care2} vezes, Via Oral, 4x ao dia, do dia 6–10\n`;
-                    text += `  • Care 3: Borrifar ${data.care3} vezes, Via Oral, 4x ao dia, do dia 11–15\n`;
-                    text += `  • Care 4: Borrifar ${data.care4} vezes, Via Oral, 4x ao dia, do dia 16–20\n`;
+                    text += `  • Care 1: Borrifar ${data.care1} ${pluralize(data.care1, 'vez', 'vezes')}, Via Oral, 4x ao dia, do dia 1–5\n`;
+                    text += `  • Care 2: Borrifar ${data.care2} ${pluralize(data.care2, 'vez', 'vezes')}, Via Oral, 4x ao dia, do dia 6–10\n`;
+                    text += `  • Care 3: Borrifar ${data.care3} ${pluralize(data.care3, 'vez', 'vezes')}, Via Oral, 4x ao dia, do dia 11–15\n`;
+                    text += `  • Care 4: Borrifar ${data.care4} ${pluralize(data.care4, 'vez', 'vezes')}, Via Oral, 4x ao dia, do dia 16–20\n`;
                 }
             } else {
-                text += `  • Borrifar ${data.dosage} vezes, Via Oral, 4 vezes ao dia, por 7 dias\n`;
+                text += `  • Borrifar ${data.dosage} ${pluralize(data.dosage, 'vez', 'vezes')}, Via Oral, 4 vezes ao dia, por 7 dias\n`;
             }
             text += `  Compre aqui: ${productLinks[name] || 'Site Oficial'}\n\n`;
         });
