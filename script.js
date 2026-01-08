@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardContent = document.querySelector('.card-content-dosage');
         const modalSize = document.querySelector('.product-name-dosage .size');
 
-        if (name === "Natural Care Four") {
+        if (name.includes("Natural Care Four")) {
             modalSize.textContent = "'10 ml'";
             renderNaturalCareFour(cardContent);
         } else {
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const existing = selectedProducts.get(name);
 
-        if (name === "Natural Care Four") {
+        if (name.includes("Natural Care Four")) {
             const data = existing || { spray: "1", days: "7", care1: "3", care2: "3", care3: "3", care4: "3" };
             setupChipSelection('spray', data.spray);
             setupChipSelection('days', data.days);
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnConfirmDosage.onclick = () => {
         let data;
-        if (currentProductEditing === "Natural Care Four") {
+        if (currentProductEditing.includes("Natural Care Four")) {
             data = {
                 spray: getSelectedValue('spray'),
                 days: getSelectedValue('days'),
@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPatientName.textContent = patientData.name || 'Não informado';
         const displayPhoneRow = document.getElementById('display-patient-phone-row');
         if (displayPhoneRow) {
-            displayPhoneRow.textContent = patientData.phone ? ` - ${patientData.phone}` : '';
+            displayPhoneRow.textContent = patientData.phone ? `Telefone: ${patientData.phone}` : '';
         }
         displayPatientPhone.textContent = patientData.phone ? `Telefone: ${patientData.phone}` : '';
 
