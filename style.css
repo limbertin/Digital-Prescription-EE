@@ -684,14 +684,25 @@ body {
 }
 
 .btn-buy {
-    background: #22c55e;
+    background: #10b981;
+    /* More vibrant emerald green */
     color: #fff;
     text-decoration: none;
-    padding: 8px 15px;
+    padding: 8px 14px;
     border-radius: 8px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-shadow: -1px 0px 9px rgb(97, 108, 105);
+}
+
+.btn-buy:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
 .general-instructions {
