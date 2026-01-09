@@ -189,13 +189,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Patient Information Logic ---
 
-    patientTrigger.onclick = () => {
+    const openPatientModal = () => {
         inputPatientName.value = patientData.name;
         inputPatientDdi.value = patientData.ddi;
         inputPatientPhone.value = patientData.phone;
         inputPrescriptionDate.value = patientData.date;
         patientModal.classList.add('active');
+
+        // Auto-focus and select name
+        setTimeout(() => {
+            inputPatientName.focus();
+            inputPatientName.select();
+        }, 100);
     };
+
+    patientTrigger.onclick = openPatientModal;
+
+    // keyboard support for patient trigger
+    patientTrigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openPatientModal();
+        }
+    });
 
     btnCancelPatient.onclick = () => {
         patientModal.classList.remove('active');
@@ -209,7 +225,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         patientNameDisplay.textContent = patientData.name || 'Clique para preencher';
         patientModal.classList.remove('active');
+
+        // Auto-focus "Gerar Receituário"
+        setTimeout(() => {
+            if (!btnSubmit.disabled) {
+                btnSubmit.focus();
+            }
+        }, 100);
     };
+
+    // Enter to Save in Patient Modal
+    [inputPatientName, inputPatientDdi, inputPatientPhone, inputPrescriptionDate].forEach(input => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnSavePatient.click();
+            }
+        });
+    });
 
     // --- Modal Logic ---
 
