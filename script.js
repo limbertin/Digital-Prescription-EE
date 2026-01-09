@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // [DEBUG] Alt+P to toggle print visualization
+    document.addEventListener('keydown', (e) => {
+        if (e.altKey && e.key.toLowerCase() === 'p') {
+            document.body.classList.toggle('debug-print-mode');
+            console.log('Print Debug Mode:', document.body.classList.contains('debug-print-mode') ? 'ON' : 'OFF');
+
+            // Check if we need to auto-open prescription
+            if (document.body.classList.contains('debug-print-mode')) {
+                if (selectedProducts && selectedProducts.size > 0) {
+                    if (typeof generatePrescription === 'function' && !document.getElementById('prescription-modal').classList.contains('active')) {
+                        generatePrescription();
+                    }
+                } else {
+                    alert('Selecione ao menos um produto para ver o preview.');
+                    document.body.classList.remove('debug-print-mode');
+                }
+            }
+        }
+    });
+
     const products = [
         "1. Life Energy", "2. Imuno Energy", "3. Balance Energy", "4. Brain Energy", "5. Circulatory Energy",
         "6. Harmony Energy", "7. Digest Energy", "8. Pancreatic Energy", "9. Cardio Energy", "10. Microclear Energy",

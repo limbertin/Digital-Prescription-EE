@@ -770,6 +770,66 @@ body {
     color: white;
 }
 
+/* [DEBUG] Force Print View on Screen */
+body.debug-print-mode>*:not(#prescription-modal) {
+    display: none !important;
+}
+
+body.debug-print-mode #prescription-modal {
+    display: block !important;
+    position: static !important;
+    background: #f1f5f9 !important;
+    padding: 20px !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+body.debug-print-mode .modal-content.prescription-modal-content {
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 210mm !important;
+    /* A4 Width */
+    max-width: none !important;
+}
+
+body.debug-print-mode .printable-area {
+    display: block !important;
+    visibility: visible !important;
+    background: white !important;
+    color: black !important;
+    padding: 10mm !important;
+    border: 1px solid #ddd !important;
+}
+
+body.debug-print-mode .printable-area * {
+    visibility: visible !important;
+    color: black !important;
+}
+
+body.debug-print-mode .prescription-actions,
+body.debug-print-mode .btn-buy,
+body.debug-print-mode .btn-secondary {
+    display: none !important;
+}
+
+body.debug-print-mode .prescribed-items {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+}
+
+body.debug-print-mode .signature-area {
+    display: block !important;
+}
+
+body.debug-print-mode .item-posology {
+    font-size: 0.75rem !important;
+    /* Smaller to fit one line */
+    white-space: nowrap;
+}
+
 /* Print Styles */
 @media print {
 
@@ -813,7 +873,7 @@ body {
         box-shadow: none !important;
         margin: 0 !important;
         width: 100% !important;
-        padding: 10mm !important;
+        padding: 0 !important;
         border: none !important;
     }
 
@@ -838,8 +898,9 @@ body {
     }
 
     .item-logo-small {
-        width: 80px !important;
-        height: 80px !important;
+        width: 60px !important;
+        /* Slightly smaller to give more room for text */
+        height: 60px !important;
     }
 
     .prescribed-items {
@@ -897,6 +958,13 @@ body {
     .general-instructions li,
     .date-display {
         color: #666 !important;
+        font-size: 0.75rem !important;
+        /* Smaller font to force single line */
+        white-space: nowrap;
+    }
+
+    .item-posology p {
+        margin: 0;
     }
 
     .btn-buy {
