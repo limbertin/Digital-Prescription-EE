@@ -193,7 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            if (dosageModal.classList.contains('active')) {
+            if (document.body.classList.contains('debug-print-mode')) {
+                document.body.classList.remove('debug-print-mode');
+                console.log('Print Debug Mode: OFF (via Escape)');
+            } else if (dosageModal.classList.contains('active')) {
                 closeDosageModalAndFocusSearch();
             } else if (prescriptionModal.classList.contains('active')) {
                 closePrescriptionModalAndFocusSearch();
