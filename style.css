@@ -740,6 +740,14 @@ body {
     margin: 0 auto 10px;
 }
 
+.signature-image {
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: 0 auto 1px;
+    opacity: 0.9;
+}
+
 .prescription-actions {
     display: flex;
     gap: 15px;
@@ -821,6 +829,11 @@ body.debug-print-mode .prescribed-items {
 }
 
 body.debug-print-mode .signature-area {
+    display: block !important;
+    text-align: center;
+}
+
+body.debug-print-mode .signature-image {
     display: block !important;
 }
 

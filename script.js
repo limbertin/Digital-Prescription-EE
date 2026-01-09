@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderNaturalCareFour(container) {
         container.innerHTML = `
             <div class="input-group">
-                <h3>${pluralize(2, 'FRASCO', 'FRASCOS')} SPRAY</h3>
+                <h3>${pluralize(2, 'KIT', 'KITS')}</h3>
                 <div class="chip-container" data-field="spray">
                     <button class="chip" data-value="1">1</button>
                     <button class="chip" data-value="2">2</button>
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ${[1, 2, 3, 4].map(num => `
                 <div class="care-section">
-                    <h2>Care ${num}</h2>
+                    <h2 style="margin-bottom:5px;">Care ${num}</h2>
                     <h3>BORRIFAR ___ ${pluralize(2, 'VEZ', 'VEZES')}</h3>
                     <div class="chip-container" data-field="care${num}">
                         <button class="chip" data-value="1">1</button>
